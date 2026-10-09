@@ -1,0 +1,248 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/stix-two-text';
+@import '@fontsource-variable/jetbrains-mono';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ---------- Colour tokens: slate ink by default, graph paper in light ---------- */
+
+:root {
+  --bg: #eef2f5;
+  --surface: #ffffff;
+  --ink: #13212d;
+  --ink-soft: #4d5f6e;
+  --line: #cdd8e0;
+  --grid: rgb(19 33 45 / 0.055);
+  --copper: #a5581c;
+  --copper-ink: #ffffff;
+  --copper-text: #9a5119;
+  --solved: #157a52;
+  --alert: #b42d1a;
+  --tint: rgb(19 33 45 / 0.05);
+
+  --code-keyword: #9a5119;
+  --code-string: #157a52;
+  --code-number: #1f5f99;
+  --code-builtin: #6b3fa8;
+  --code-comment: #5d6d7a;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f1a24;
+  --surface: #152330;
+  --ink: #e6ebef;
+  --ink-soft: #9aabb9;
+  --line: #253847;
+  --grid: rgb(154 171 185 / 0.06);
+  --copper: #d9995a;
+  --copper-ink: #1d1206;
+  --copper-text: #e2a96f;
+  --solved: #6fd1a4;
+  --alert: #ff7a66;
+  --tint: rgb(230 235 239 / 0.05);
+
+  --code-keyword: #e2a96f;
+  --code-string: #8fd8b4;
+  --code-number: #8cc1ec;
+  --code-builtin: #c9adf0;
+  --code-comment: #8a9cab;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-copper: var(--copper);
+  --color-copper-ink: var(--copper-ink);
+  --color-copper-text: var(--copper-text);
+  --color-solved: var(--solved);
+  --color-alert: var(--alert);
+  --color-tint: var(--tint);
+}
+
+@theme {
+  --font-serif: 'STIX Two Text Variable', ui-serif, Georgia, serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --animate-pop: pop 380ms cubic-bezier(0.3, 1.6, 0.5, 1);
+  --animate-rise: rise 420ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+  --animate-reveal: reveal 360ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+
+  @keyframes pop {
+    40% {
+      transform: scale(1.18);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+  }
+
+  /* An answer is written in from the left, like ink on the page. */
+  @keyframes reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html[data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    transition:
+      background-color 250ms,
+      color 250ms;
+  }
+
+  /* Graph paper: a fine 24px grid under every page. */
+  body {
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: -1px -1px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@utility font-digits {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 120ms,
+    background-color 150ms,
+    color 150ms,
+    box-shadow 150ms;
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@utility btn-primary {
+  background-color: var(--copper);
+  color: var(--copper-ink);
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 6px 18px -8px var(--copper);
+  }
+}
+
+@utility btn-ghost {
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+
+  &:hover:not(:disabled) {
+    background-color: var(--tint);
+  }
+}
+
+@utility link {
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-color: var(--copper);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--copper-text);
+  }
+}
+
+/* ---------- Code highlighting (highlight.js classes) ---------- */
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-meta {
+  color: var(--code-keyword);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-template-tag {
+  color: var(--code-string);
+}
+
+.hljs-number {
+  color: var(--code-number);
+}
+
+.hljs-built_in,
+.hljs-type,
+.hljs-title.class_ {
+  color: var(--code-builtin);
+}
+
+.hljs-title.function_ {
+  font-weight: 700;
+}
+
+.hljs-comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+/* Cross-fade between pages (TanStack Router view transitions). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

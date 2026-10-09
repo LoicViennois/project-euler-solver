@@ -25,7 +25,7 @@ export function wordValue(word: string): number {
 }
 
 export function haveSameLength<T>(...arrays: T[][]): boolean {
-  const len0 = arrays[0].length;
+  const len0 = arrays[0]?.length;
   for (const array of arrays) {
     if (array.length !== len0) {
       return false;
@@ -71,7 +71,7 @@ export function uniq<T>(array: T[]): T[] {
 
 export function concat<T>(...arrays: T[][]): T[] {
   const [array1, ...otherArrays] = arrays;
-  return array1.concat(...otherArrays);
+  return (array1 ?? []).concat(...otherArrays);
 }
 
 export function union<T>(...arrays: T[][]): T[] {
@@ -98,11 +98,13 @@ export function arraysEqual<T>(a: T[], b: T[]): boolean {
 }
 
 export function transpose<T>(array: T[][]): T[][] {
-  return array[0].map((col, colIndex) => array.map((row) => row[colIndex]));
+  return (array[0] ?? []).map((_, colIndex) =>
+    array.map((row) => row[colIndex]!),
+  );
 }
 
 export function zip<T, U>(array1: T[], array2: U[]): [T, U][] {
-  return array1.map((val1, index) => [val1, array2[index]]);
+  return array1.map((val1, index) => [val1, array2[index]!]);
 }
 
 export function difference<T>(array1: T[], array2: T[]): T[] {

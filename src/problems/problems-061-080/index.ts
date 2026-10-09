@@ -1,4 +1,4 @@
-import { EulerProblem } from '../types/euler-problem';
+import type { EulerProblem } from '../types/euler-problem';
 
 import { euler061 } from './euler061';
 import { euler062 } from './euler062';

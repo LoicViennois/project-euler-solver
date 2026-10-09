@@ -1,4 +1,4 @@
-import { ProblemFunction } from './problem-function';
+import type { ProblemFunction } from './problem-function';
 
 export interface EulerProblem {
   id: number;

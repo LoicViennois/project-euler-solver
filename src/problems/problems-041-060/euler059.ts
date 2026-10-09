@@ -1,4 +1,4 @@
-import cipherText from './assets/p059_cipher.txt';
+import cipherText from './assets/p059_cipher.txt?raw';
 
 import { permutation } from '../combinatorics.js';
 import { SolutionNotFoundError } from '../errors/solution-not-found.error.js';
@@ -9,9 +9,7 @@ import { concat, range, times, zip } from '../utils.js';
 https://projecteuler.net/problem=59
 */
 export function euler059(): number {
-  const bytes = cipherText
-    .split(',')
-    .map((c) => +c);
+  const bytes = cipherText.split(',').map((c) => +c);
 
   const nbCycles = Math.ceil(bytes.length / 3);
 

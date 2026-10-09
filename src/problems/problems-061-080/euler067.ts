@@ -1,4 +1,4 @@
-import triangleText from './assets/p067_triangle.txt';
+import triangleText from './assets/p067_triangle.txt?raw';
 
 import { max } from '../maths.js';
 
@@ -20,7 +20,7 @@ export function euler067(): number {
     for (const [index, col] of row.entries()) {
       distances[index] =
         col +
-        max([previousDistances[index - 1] || 0, previousDistances[index]]);
+        max([previousDistances[index - 1] ?? 0, previousDistances[index]!]);
     }
   }
 

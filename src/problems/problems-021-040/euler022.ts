@@ -1,13 +1,11 @@
-import namesText from './assets/p022_names.txt';
+import namesText from './assets/p022_names.txt?raw';
 import { wordValue } from '../utils.js';
 
 /*
 https://projecteuler.net/problem=22
 */
 export function euler022(): number {
-  const names = namesText
-    .replace(/"/g, '')
-    .split(',');
+  const names = namesText.replace(/"/g, '').split(',');
 
   names.sort();
 

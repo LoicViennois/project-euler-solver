@@ -1,65 +1,44 @@
-// @ts-check
-const eslint = require('@eslint/js');
-const tseslint = require('typescript-eslint');
-const angular = require('angular-eslint');
+import js from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-module.exports = tseslint.config(
+export default defineConfig([
+  globalIgnores([
+    'dist',
+    'dev-dist',
+    '.claude/worktrees',
+    'playwright-report',
+    'test-results',
+    'coverage',
+    'src/routeTree.gen.ts',
+  ]),
   {
-    files: ['**/*.ts'],
+    files: ['**/*.{ts,tsx}'],
     extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
+      js.configs.recommended,
+      tseslint.configs.strict,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
     ],
-    processor: angular.processInlineTemplates,
-    rules: {
-      '@typescript-eslint/member-ordering': [
-        'error',
-        {
-          default: {
-            memberTypes: [
-              'public-static-field',
-              'protected-static-field',
-              'private-static-field',
-              'public-instance-field',
-              'protected-instance-field',
-              'private-instance-field',
-              'constructor',
-              'public-static-method',
-              'protected-static-method',
-              'private-static-method',
-              'public-instance-method',
-              'protected-instance-method',
-              'private-instance-method',
-            ],
-          },
-        },
-      ],
-      '@angular-eslint/directive-selector': [
-        'error',
-        {
-          type: 'attribute',
-          prefix: 'euler',
-          style: 'camelCase',
-        },
-      ],
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'euler',
-          style: 'kebab-case',
-        },
-      ],
+    languageOptions: {
+      globals: globals.browser,
     },
   },
   {
-    files: ['**/*.html'],
-    extends: [
-      ...angular.configs.templateRecommended,
-      ...angular.configs.templateAccessibility,
-    ],
-    rules: {},
+    files: ['src/routes/**/*.tsx'],
+    rules: {
+      // TanStack Router route files export `Route` alongside their components
+      'react-refresh/only-export-components': 'off',
+    },
   },
-);
+  {
+    files: ['src/problems/**/*.ts'],
+    rules: {
+      // Solutions index arrays within bounds their loops already guarantee
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+]);

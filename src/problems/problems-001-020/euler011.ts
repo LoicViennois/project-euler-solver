@@ -118,9 +118,9 @@ export function euler011(): number {
    */
   for (const r of range(theBigGrid.length - 4 + 1)) {
     const rows = theBigGrid.slice(r, r + 4); // group of 4 rows
-    for (const i of range(3, rows[0].length)) {
+    for (const i of range(3, rows[0]!.length)) {
       const prod =
-        rows[0][i] * rows[1][i - 1] * rows[2][i - 2] * rows[3][i - 3];
+        rows[0]![i]! * rows[1]![i - 1]! * rows[2]![i - 2]! * rows[3]![i - 3]!;
       maxProd = Math.max(maxProd, prod);
     }
   }
@@ -132,9 +132,9 @@ export function euler011(): number {
   */
   for (const r of range(theBigGrid.length - 4 + 1)) {
     const rows = theBigGrid.slice(r, r + 4); // group of 4 rows
-    for (const i of range(rows[0].length - 3)) {
+    for (const i of range(rows[0]!.length - 3)) {
       const prod =
-        rows[0][i] * rows[1][i + 1] * rows[2][i + 2] * rows[3][i + 3];
+        rows[0]![i]! * rows[1]![i + 1]! * rows[2]![i + 2]! * rows[3]![i + 3]!;
       maxProd = Math.max(maxProd, prod);
     }
   }

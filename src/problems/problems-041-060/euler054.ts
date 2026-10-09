@@ -1,4 +1,4 @@
-import pokerText from './assets/p054_poker.txt';
+import pokerText from './assets/p054_poker.txt?raw';
 
 import { max, min, sum } from '../maths.js';
 import {
@@ -38,11 +38,11 @@ export function euler054(): number {
     .filter((line) => line)
     .map((game) => {
       const cards = game.split(' ');
-      return [cards.slice(0, 5), cards.slice(5, 10)];
+      return [cards.slice(0, 5), cards.slice(5, 10)] as const;
     });
 
   function cardValue(card: string): number {
-    const value = card[0];
+    const value = card.charAt(0);
     if (value === 'A') {
       return 14; // Ace
     } else if (value === 'K') {
@@ -77,7 +77,7 @@ export function euler054(): number {
       return {
         round1: HandValues.FullHouse,
         round2: three,
-        round3: pairs[0],
+        round3: pairs[0]!,
       };
     } else if (three) {
       return {
@@ -101,7 +101,7 @@ export function euler054(): number {
       } else if (pairs.length === 1) {
         return {
           round1: HandValues.OnePair,
-          round2: pairs[0],
+          round2: pairs[0]!,
           round3: max(other),
         };
       }

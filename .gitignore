@@ -1,13 +1,14 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
 # compiled output
 /dist
 /tmp
-/out-tsc
 
 # dependencies
 /node_modules
 
 # IDEs and editors
-/.idea
+.idea/
 .project
 .classpath
 .c9/
@@ -23,26 +24,29 @@
 !.vscode/extensions.json
 
 # misc
-/.angular
-/.sass-cache
+/dev-dist
 /connect.lock
 /coverage
 /libpeerconnection.log
-npm-debug.log*
+npm-debug.log
+yarn-error.log
 pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 testem.log
 /typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+/playwright-report
+/test-results
+/.playwright
 
 # System Files
 .DS_Store
 Thumbs.db
 
-# Generated build files
-/src/environments/git-info.ts
+# TanStack Router plugin cache
+/.tanstack
 
-# Playwright
-/playwright-report/
-/test-results/
-
+# Claude Code worktrees
+/.claude/worktrees

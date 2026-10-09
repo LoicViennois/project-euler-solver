@@ -4,11 +4,11 @@ import { bigNumber2digits, range } from '../utils.js';
 function computeBigContinuedFraction(terms: bigint[]): [bigint, bigint] {
   const len = terms.length;
 
-  let ni = terms[len - 1];
+  let ni = terms[len - 1]!;
   let di = BigInt(1);
 
   for (let i = len - 1; i--; i >= 0) {
-    const aj = terms[i];
+    const aj = terms[i]!;
     const nj1 = ni;
     ni = ni * aj + di;
     di = nj1;

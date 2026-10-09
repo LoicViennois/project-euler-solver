@@ -55,7 +55,7 @@ export function euler061(): number {
   function isInSubset(k: number, set: number[][]): [boolean, number[][]] {
     const newSet = [...set];
     for (let s = 0; s < newSet.length; s++) {
-      if (newSet[s].includes(k)) {
+      if (newSet[s]!.includes(k)) {
         newSet.splice(s, 1);
         return [true, newSet];
       }

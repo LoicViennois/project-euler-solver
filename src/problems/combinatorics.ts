@@ -52,7 +52,7 @@ export function cartesianProduct<T>(...arrays: T[][]): T[][] {
   const recursion = (cumul: T[], arrs: T[][]) => {
     const [a0, ...others] = arrs;
 
-    for (const v0 of a0) {
+    for (const v0 of a0 ?? []) {
       const newCumul = [...cumul, v0];
       if (newCumul.length === arrays.length) {
         result.push(newCumul);

@@ -1,4 +1,4 @@
-import wordsText from './assets/p042_words.txt';
+import wordsText from './assets/p042_words.txt?raw';
 
 import { max } from '../maths.js';
 import { wordValue } from '../utils.js';
@@ -11,9 +11,7 @@ export function euler042(): number {
     return (n * (n + 1)) / 2;
   };
 
-  const words = wordsText
-    .replace(/"/g, '')
-    .split(',');
+  const words = wordsText.replace(/"/g, '').split(',');
 
   // Max triangle number is the length of the longest word * 26 (for ZZZZZZ...)
   const maxTriangleNumber = max(words.map((w) => w.length)) * 26;
