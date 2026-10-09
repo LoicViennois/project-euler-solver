@@ -14,7 +14,7 @@ export function euler023(): number {
   const abNumsSums = new Set();
   abNums.forEach((v1, k1) => {
     for (let k2 = k1; k2 < abNums.length; k2++) {
-      abNumsSums.add(v1 + abNums[k2]);
+      abNumsSums.add(v1 + abNums[k2]!);
     }
   });
 

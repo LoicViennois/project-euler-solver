@@ -27,7 +27,7 @@ export function euler018(): number {
       sums.push(sum);
       return;
     }
-    sum += triangle[r][c];
+    sum += triangle[r]![c]!;
     followPath(r + 1, c, sum);
     followPath(r + 1, c + 1, sum);
   };

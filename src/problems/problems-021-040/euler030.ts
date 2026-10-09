@@ -6,7 +6,7 @@ https://projecteuler.net/problem=30
 */
 export function euler030(): number {
   let p = 9;
-  let maxNum = 0;
+  let maxNum: number;
   while (true) {
     const digitsPowers = sum(number2digits(p).map((x) => x ** 5));
     if (p >= digitsPowers) {

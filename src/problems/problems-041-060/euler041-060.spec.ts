@@ -1,3 +1,5 @@
+import { describe, expect, test } from 'vitest';
+
 import { euler041 } from './euler041.js';
 import { euler042 } from './euler042.js';
 import { euler043 } from './euler043.js';

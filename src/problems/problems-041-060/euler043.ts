@@ -67,14 +67,21 @@ export function euler043(): number {
                         for (const n2 of getPossibleValues(n3)) {
                           if (d2.includes(digits2number(n2))) {
                             let finalDigits: number[] = concat(
-                              [n2[0], n3[0], n5[0], n7[0], n11[0], n13[0]],
+                              [
+                                n2[0]!,
+                                n3[0]!,
+                                n5[0]!,
+                                n7[0]!,
+                                n11[0]!,
+                                n13[0]!,
+                              ],
                               n17,
                             );
                             if (!haveDuplicates(finalDigits)) {
                               const firstDigit = range(10).filter(
                                 (k) => !finalDigits.includes(k),
                               )[0];
-                              finalDigits = concat([firstDigit], finalDigits);
+                              finalDigits = concat([firstDigit!], finalDigits);
                               finalNumbers.push(digits2number(finalDigits));
                             }
                           }

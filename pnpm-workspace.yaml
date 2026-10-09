@@ -1,7 +1,3 @@
 allowBuilds:
-  '@fortawesome/fontawesome-free': true
-  '@parcel/watcher': true
-  '@swc/core': true
   esbuild: true
-  lmdb: true
-  msgpackr-extract: true
+  '@tailwindcss/oxide': true

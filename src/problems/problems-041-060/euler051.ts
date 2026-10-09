@@ -38,5 +38,5 @@ export function euler051(): number {
     }
   }
 
-  return maxBy(digitReplacements, (a) => a.length)[0];
+  return maxBy(digitReplacements, (a) => a.length)[0]!;
 }

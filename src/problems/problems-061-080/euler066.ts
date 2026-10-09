@@ -3,11 +3,11 @@ import { findPeriod } from './euler064.js';
 function computeContinuedFraction(terms: number[]): number {
   const len = terms.length;
 
-  let ni = terms[len - 1];
+  let ni = terms[len - 1]!;
   let di = 1;
 
   for (let i = len - 1; i--; i >= 0) {
-    const aj = terms[i];
+    const aj = terms[i]!;
     const nj1 = ni;
     ni = ni * aj + di;
     di = nj1;
@@ -27,7 +27,7 @@ export function euler066(): number {
       continue;
     }
     const [period, terms] = findPeriod(d);
-    let num = 0;
+    let num: number;
     if (period % 2 === 1) {
       const termsToCompute = [...terms, ...terms.slice(1, terms.length - 1)];
       num = computeContinuedFraction(termsToCompute);
