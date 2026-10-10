@@ -4,7 +4,7 @@
 // Shared by the header logo (src/components/Logo.tsx) and the favicon and PWA
 // icons (scripts/generate-icons.mjs).
 
-const TURNS = 3;
+const TURNS = 2;
 const CENTRE = 16;
 // Centre of the upper coil, relative to the grid centre (y pointing up).
 const COIL_X = 6;
@@ -14,7 +14,7 @@ const RADIUS = 6;
 const INNER_ANGLE = Math.PI;
 const SAMPLES = 240;
 
-export const SPIRAL_STROKE_WIDTH = 1.15;
+export const SPIRAL_STROKE_WIDTH = 1.45;
 
 function spiralPath() {
   const sweep = TURNS * 2 * Math.PI;
