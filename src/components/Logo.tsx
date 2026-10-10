@@ -1,3 +1,5 @@
+import { SPIRAL_PATH, SPIRAL_STROKE_WIDTH } from '../lib/logo-spiral';
+
 // Same mark as the favicon and PWA icons (scripts/generate-icons.mjs).
 export function Logo({ className }: { className?: string }) {
   return (
@@ -7,12 +9,14 @@ export function Logo({ className }: { className?: string }) {
       className={`size-8 shrink-0 ${className ?? ''}`}
     >
       <rect width="32" height="32" rx="7" fill="#152330" />
-      <g fill="#d9995a">
-        <rect x="9" y="7" width="4" height="18" rx="1" />
-        <rect x="9" y="7" width="14" height="4" rx="1" />
-        <rect x="9" y="14" width="10" height="4" rx="1" />
-        <rect x="9" y="21" width="14" height="4" rx="1" />
-      </g>
+      <path
+        d={SPIRAL_PATH}
+        fill="none"
+        stroke="#d9995a"
+        strokeWidth={SPIRAL_STROKE_WIDTH}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
