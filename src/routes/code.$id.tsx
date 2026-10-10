@@ -134,7 +134,7 @@ function CodePage() {
           />
           <span className="sr-only">(opens in a new tab)</span>
         </a>
-        <div className="flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-3">
           <p
             role="status"
             className="text-right text-sm leading-tight text-ink-soft"
