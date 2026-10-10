@@ -1,11 +1,13 @@
-// Generates the favicon and PWA icons from one SVG design: a copper "E" on slate,
-// the same mark as the header logo (src/components/Logo.tsx).
+// Generates the favicon and PWA icons from one SVG design: a copper double spiral
+// on slate, the same mark as the header logo (src/components/Logo.tsx).
 // Usage: pnpm icons
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { chromium } from '@playwright/test';
+
+import { SPIRAL_PATH, SPIRAL_STROKE_WIDTH } from '../src/lib/logo-spiral.ts';
 
 const PUBLIC_DIR = resolve(
   dirname(fileURLToPath(import.meta.url)),
@@ -18,14 +20,12 @@ const COPPER = '#d9995a';
 
 /**
  * @param {{ maskable?: boolean }} options Maskable icons are full-bleed, with the
- * letter kept inside the 80% safe zone so any platform mask shape fits.
+ * spiral kept inside the 80% safe zone so any platform mask shape fits.
  */
 function iconSvg({ maskable = false } = {}) {
   // The logo is drawn on a 32 unit grid, scaled to 512.
   const scale = maskable ? 12 : 16;
   const offset = (512 - 32 * scale) / 2;
-  const bar = (x, y, width, height) =>
-    `<rect x="${offset + x * scale}" y="${offset + y * scale}" width="${width * scale}" height="${height * scale}" rx="${scale}"/>`;
   const gridLines = Array.from({ length: 15 }, (_, i) => (i + 1) * 32)
     .map(
       (p) =>
@@ -39,9 +39,7 @@ function iconSvg({ maskable = false } = {}) {
     <rect width="512" height="512" fill="${BACKGROUND}"/>
     ${gridLines}
   </g>
-  <g fill="${COPPER}">
-    ${bar(9, 7, 4, 18)}${bar(9, 7, 14, 4)}${bar(9, 14, 10, 4)}${bar(9, 21, 14, 4)}
-  </g>
+  <path transform="translate(${offset} ${offset}) scale(${scale})" d="${SPIRAL_PATH}" fill="none" stroke="${COPPER}" stroke-width="${SPIRAL_STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 }
