@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, PencilLine } from 'lucide-react';
+import { PencilLine } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import { hasSolution } from '../lib/catalog';
@@ -115,11 +115,6 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
             </span>
           )}
         </span>
-        <ArrowRight
-          aria-hidden
-          // Takes no room until hovered, so the time sits flush right.
-          className="-ml-2 h-4 w-0 shrink-0 -translate-x-1 text-copper-text opacity-0 transition-all group-hover:ml-0 group-hover:w-4 group-hover:translate-x-0 group-hover:opacity-100"
-        />
       </div>
     </article>
   );
