@@ -44,7 +44,9 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         <div>
           <h2 className="leading-none">{heading}</h2>
           {name && (
-            <p className="mt-1.5 leading-snug font-medium text-ink">{name}</p>
+            <p className="mt-1.5 leading-snug font-medium text-copper-text">
+              {name}
+            </p>
           )}
         </div>
         <p className="flex items-center gap-2 text-ink-soft">
@@ -83,7 +85,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
             </Link>
           </h2>
           {name && (
-            <p className="mt-1.5 leading-snug font-medium text-pretty text-ink">
+            <p className="mt-1.5 leading-snug font-medium text-pretty text-copper-text">
               {name}
             </p>
           )}

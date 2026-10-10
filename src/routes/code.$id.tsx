@@ -109,7 +109,9 @@ function CodePage() {
           {problemTitle(id) && (
             <>
               {' · '}
-              <span className="font-semibold text-ink">{problemTitle(id)}</span>
+              <span className="font-semibold text-copper-text">
+                {problemTitle(id)}
+              </span>
             </>
           )}
         </p>
