@@ -20,6 +20,8 @@
   --alert: #b42d1a;
   --tint: rgb(19 33 45 / 0.05);
   --solved-surface: color-mix(in oklab, var(--solved) 9%, var(--surface));
+  /* Lightness of the green-to-red solving time, readable on either theme. */
+  --time-lightness: 0.5;
 
   --code-keyword: #9a5119;
   --code-string: #157a52;
@@ -41,6 +43,7 @@
   --solved: #6fd1a4;
   --alert: #ff7a66;
   --tint: rgb(230 235 239 / 0.05);
+  --time-lightness: 0.8;
 
   --code-keyword: #e2a96f;
   --code-string: #8fd8b4;

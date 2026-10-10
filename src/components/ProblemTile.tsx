@@ -7,6 +7,18 @@ import { formatDuration } from '../lib/format-time';
 import { useRun } from '../lib/solver';
 import { SolveButton } from './SolveButton';
 
+const ONE_MINUTE = 60_000;
+
+/** Green for instant runs to red at Project Euler's one-minute limit, on a log scale. */
+function durationColor(duration: number): string {
+  const share = Math.min(
+    1,
+    Math.log10(duration + 1) / Math.log10(ONE_MINUTE + 1),
+  );
+  const hue = 145 - share * 120;
+  return `oklch(var(--time-lightness) 0.16 ${hue})`;
+}
+
 export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
   const run = useRun(id);
   const available = hasSolution(id);
@@ -90,9 +102,14 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
             </span>
           )}
         </p>
-        <span data-testid="duration" className="text-sm text-ink-soft">
+        <span
+          data-testid="duration"
+          className="text-sm font-medium"
+          style={solved ? { color: durationColor(run.duration) } : undefined}
+        >
           {solved && (
-            <span className="inline-block animate-fade-in">
+            <span className="inline-flex animate-fade-in items-center gap-1.5 self-center">
+              <span aria-hidden className="size-1.5 rounded-full bg-current" />
               <span className="sr-only">Solved in </span>
               {formatDuration(run.duration)}
             </span>
