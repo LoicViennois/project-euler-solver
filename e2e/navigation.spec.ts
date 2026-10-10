@@ -28,11 +28,11 @@ test.describe('Navigation', () => {
 
     await expect(problems.githubLink).toHaveAttribute(
       'href',
-      'https://github.com/LoicViennois/Project-Euler-Solver',
+      'https://github.com/LoicViennois/project-euler-solver',
     );
     await expect(problems.buildInfo.getByRole('link')).toHaveAttribute(
       'href',
-      /^https:\/\/github\.com\/LoicViennois\/Project-Euler-Solver/,
+      /^https:\/\/github\.com\/LoicViennois\/project-euler-solver/,
     );
   });
 
@@ -49,7 +49,7 @@ test.describe('Navigation', () => {
       dialog.getByRole('link', { name: 'MIT License' }),
     ).toHaveAttribute(
       'href',
-      'https://github.com/LoicViennois/Project-Euler-Solver/blob/master/LICENSE',
+      'https://github.com/LoicViennois/project-euler-solver/blob/master/LICENSE',
     );
     await expect(
       dialog.getByRole('link', { name: 'Open an issue on GitHub' }),
