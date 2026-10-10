@@ -9,7 +9,6 @@ export class ProblemsPage {
   readonly githubLink: Locator;
   readonly aboutButton: Locator;
   readonly themeToggle: Locator;
-  readonly buildInfo: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,7 +25,6 @@ export class ProblemsPage {
     this.themeToggle = page
       .getByRole('banner')
       .getByRole('button', { name: /Switch to (light|dark) theme/ });
-    this.buildInfo = page.getByTestId('build-info');
   }
 
   async goto(): Promise<void> {

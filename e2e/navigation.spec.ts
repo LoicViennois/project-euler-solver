@@ -20,19 +20,13 @@ test.describe('Navigation', () => {
     await expect(page).toHaveURL('/');
   });
 
-  test('links to the GitHub repository and the build commit', async ({
-    page,
-  }) => {
+  test('links to the GitHub repository', async ({ page }) => {
     const problems = new ProblemsPage(page);
     await problems.goto();
 
     await expect(problems.githubLink).toHaveAttribute(
       'href',
       'https://github.com/LoicViennois/project-euler-solver',
-    );
-    await expect(problems.buildInfo.getByRole('link')).toHaveAttribute(
-      'href',
-      /^https:\/\/github\.com\/LoicViennois\/project-euler-solver/,
     );
   });
 
@@ -44,7 +38,10 @@ test.describe('Navigation', () => {
 
     const dialog = page.getByRole('dialog', { name: 'About' });
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByTestId('commit-link')).toBeVisible();
+    await expect(dialog.getByTestId('commit-link')).toHaveAttribute(
+      'href',
+      /^https:\/\/github\.com\/LoicViennois\/project-euler-solver/,
+    );
     await expect(
       dialog.getByRole('link', { name: 'MIT License' }),
     ).toHaveAttribute(
