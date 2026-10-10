@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/stix-two-text';
+@import '@fontsource-variable/space-grotesk';
 @import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
@@ -19,6 +19,7 @@
   --solved: #157a52;
   --alert: #b42d1a;
   --tint: rgb(19 33 45 / 0.05);
+  --solved-surface: color-mix(in oklab, var(--solved) 9%, var(--surface));
 
   --code-keyword: #9a5119;
   --code-string: #157a52;
@@ -58,17 +59,21 @@
   --color-copper-ink: var(--copper-ink);
   --color-copper-text: var(--copper-text);
   --color-solved: var(--solved);
+  --color-solved-surface: var(--solved-surface);
   --color-alert: var(--alert);
   --color-tint: var(--tint);
 }
 
 @theme {
-  --font-serif: 'STIX Two Text Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
   --animate-pop: pop 380ms cubic-bezier(0.3, 1.6, 0.5, 1);
   --animate-rise: rise 420ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
   --animate-reveal: reveal 360ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  --animate-glow: glow 900ms ease-out;
+  --animate-wiggle: wiggle 2.4s ease-in-out infinite;
+  --animate-fade-in: fade-in 300ms ease-out both;
 
   @keyframes pop {
     40% {
@@ -80,6 +85,41 @@
     from {
       opacity: 0;
       transform: translateY(12px) scale(0.96);
+    }
+  }
+
+  /* A ring that fades out around a card the moment it gets solved. */
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 0 0 var(--solved);
+    }
+    to {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+
+  /* A pencil that keeps scribbling, now and then. */
+  @keyframes wiggle {
+    0%,
+    60%,
+    100% {
+      transform: rotate(0);
+    }
+    70% {
+      transform: rotate(-12deg);
+    }
+    80% {
+      transform: rotate(10deg);
+    }
+    90% {
+      transform: rotate(-6deg);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
     }
   }
 
@@ -110,7 +150,7 @@
     min-height: 100%;
     background-color: var(--bg);
     color: var(--ink);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     transition:
       background-color 250ms,
       color 250ms;

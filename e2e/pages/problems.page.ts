@@ -58,8 +58,4 @@ export class ProblemsPage {
   duration(id: number): Locator {
     return this.tile(id).getByTestId('duration');
   }
-
-  solveGroupButton(first: number, last: number): Locator {
-    return this.page.getByRole('button', { name: `Solve ${first} to ${last}` });
-  }
 }

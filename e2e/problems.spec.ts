@@ -22,9 +22,10 @@ test.describe('Problems', () => {
     await expect(problems.answer(1)).toHaveText('—');
   });
 
-  test('marks problems without a solution yet', async () => {
-    await expect(problems.tile(67)).not.toContainText('Not solved yet');
-    await expect(problems.tile(68)).toContainText('Not solved yet');
+  test('shows only the problem being worked on after the solved ones', async () => {
+    await expect(problems.tile(67)).not.toContainText('Working on it');
+    await expect(problems.tile(68)).toContainText('Working on it…');
+    await expect(problems.tile(69)).toHaveCount(0);
     await expect(problems.tile(68).getByRole('button')).toHaveCount(0);
     await expect(
       problems.tile(68).getByRole('link', { name: /Code/ }),
@@ -44,18 +45,12 @@ test.describe('Problems', () => {
     await expect(problems.progress).toHaveText(/^1 of 67 solved in /);
   });
 
-  test('solves a group of ten problems', async () => {
-    await problems.solveGroupButton(1, 10).click();
+  test('solves all the problems', async () => {
+    await problems.solveAllButton.click();
 
     await expect(problems.answer(1)).toHaveText('233168');
-    await expect(problems.answer(2)).toHaveText('4613732');
     await expect(problems.answer(10)).toHaveText('142913828922');
-    await expect(problems.progress).toHaveText(/^10 of 67 solved in /);
-    await expect(problems.answer(11)).toHaveText('—');
-  });
-
-  test('offers to solve only the problems with a solution in the last group', async () => {
-    await expect(problems.solveGroupButton(61, 67)).toBeVisible();
+    await expect(problems.tile(10)).toHaveAttribute('data-solved', 'true');
   });
 
   test('keeps the answers when coming back from the code', async ({ page }) => {

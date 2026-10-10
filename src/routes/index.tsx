@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Play } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import { ProblemTile } from '../components/ProblemTile';
-import { allIds, groupIds, hasSolution, solvedIds } from '../lib/catalog';
+import { allIds, hasSolution, solvedIds } from '../lib/catalog';
 import { formatDuration } from '../lib/format-time';
 import { type Run, solve, useRuns } from '../lib/solver';
 
@@ -10,10 +11,15 @@ export const Route = createFileRoute('/')({
   component: ProblemsPage,
 });
 
-const groups = groupIds(allIds);
+// The tiles rise in on the first visit only, not on every way back from the code.
+let introPlayed = false;
 
 function ProblemsPage() {
   const runs = useRuns();
+  const [intro] = useState(() => !introPlayed);
+  useEffect(() => {
+    introPlayed = true;
+  }, []);
 
   let solvedCount = 0;
   let totalTime = 0;
@@ -35,7 +41,8 @@ function ProblemsPage() {
             id="intro-title"
             className="mb-4 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
           >
-            Project Euler, solved in your browser.
+            Project Euler, <br />
+            solved in your browser.
           </h1>
           <p className="mb-6 text-lg leading-relaxed text-ink-soft">
             {solvedIds.length} problems solved in TypeScript, each within
@@ -60,8 +67,13 @@ function ProblemsPage() {
               Solve all {solvedIds.length}
             </button>
             <p role="status" className="text-ink-soft">
-              <span className="font-digits text-ink">{solvedCount}</span> of{' '}
-              {solvedIds.length} solved
+              <span
+                key={solvedCount}
+                className="inline-block animate-pop font-digits text-ink"
+              >
+                {solvedCount}
+              </span>{' '}
+              of {solvedIds.length} solved
               {solvedCount > 0 && (
                 <>
                   {' '}
@@ -97,11 +109,21 @@ function ProblemsPage() {
 
       <ProgressStrip runs={runs} />
 
-      <div className="space-y-10">
-        {groups.map((ids) => (
-          <ProblemGroup key={ids[0]} ids={ids} />
+      <ul className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {allIds.map((id, index) => (
+          <li
+            key={id}
+            className={intro ? 'animate-rise' : undefined}
+            style={
+              intro
+                ? { animationDelay: `${Math.min(index * 12, 600)}ms` }
+                : undefined
+            }
+          >
+            <ProblemTile id={id} />
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 }
@@ -122,7 +144,7 @@ function ProgressStrip({ runs }: { runs: ReadonlyMap<number, Run> }) {
               !hasSolution(id)
                 ? 'border border-dashed border-line'
                 : status === 'solved'
-                  ? 'bg-copper'
+                  ? 'animate-pop bg-solved'
                   : status === 'solving'
                     ? 'animate-pulse bg-copper/50'
                     : 'bg-line'
@@ -131,42 +153,5 @@ function ProgressStrip({ runs }: { runs: ReadonlyMap<number, Run> }) {
         );
       })}
     </div>
-  );
-}
-
-function ProblemGroup({ ids }: { ids: number[] }) {
-  const first = ids[0] ?? 0;
-  const last = ids.at(-1) ?? 0;
-  const solvable = ids.filter(hasSolution);
-  const headingId = `problems-${first}`;
-
-  return (
-    <section aria-labelledby={headingId}>
-      <div className="mb-3 flex items-center justify-between gap-4 border-b border-line pb-2">
-        <h2 id={headingId} className="text-2xl font-semibold">
-          Problems{' '}
-          <span className="tabular-nums">
-            {first}–{last}
-          </span>
-        </h2>
-        {solvable.length > 0 && (
-          <button
-            type="button"
-            onClick={() => solve(solvable)}
-            className="btn btn-ghost py-1.5 text-sm"
-          >
-            <Play className="size-3.5" aria-hidden />
-            Solve {first} to {solvable.at(-1)}
-          </button>
-        )}
-      </div>
-      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {ids.map((id) => (
-          <li key={id}>
-            <ProblemTile id={id} />
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }
