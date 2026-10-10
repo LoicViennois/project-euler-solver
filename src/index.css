@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/stix-two-text';
+@import '@fontsource-variable/space-grotesk';
 @import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
@@ -19,6 +19,9 @@
   --solved: #157a52;
   --alert: #b42d1a;
   --tint: rgb(19 33 45 / 0.05);
+  --solved-surface: color-mix(in oklab, var(--solved) 9%, var(--surface));
+  /* Lightness of the green-to-red solving time, readable on either theme. */
+  --time-lightness: 0.5;
 
   --code-keyword: #9a5119;
   --code-string: #157a52;
@@ -40,6 +43,7 @@
   --solved: #6fd1a4;
   --alert: #ff7a66;
   --tint: rgb(230 235 239 / 0.05);
+  --time-lightness: 0.8;
 
   --code-keyword: #e2a96f;
   --code-string: #8fd8b4;
@@ -58,17 +62,22 @@
   --color-copper-ink: var(--copper-ink);
   --color-copper-text: var(--copper-text);
   --color-solved: var(--solved);
+  --color-solved-surface: var(--solved-surface);
   --color-alert: var(--alert);
   --color-tint: var(--tint);
 }
 
 @theme {
-  --font-serif: 'STIX Two Text Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
   --animate-pop: pop 380ms cubic-bezier(0.3, 1.6, 0.5, 1);
   --animate-rise: rise 420ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
   --animate-reveal: reveal 360ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  --animate-glow: glow 900ms ease-out;
+  --animate-write-pen: write-pen 1.8s ease-in-out infinite;
+  --animate-write-ink: write-ink 1.8s ease-in-out infinite;
+  --animate-fade-in: fade-in 300ms ease-out both;
 
   @keyframes pop {
     40% {
@@ -80,6 +89,85 @@
     from {
       opacity: 0;
       transform: translateY(12px) scale(0.96);
+    }
+  }
+
+  /* A ring that fades out around a card the moment it gets solved. */
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 0 0 var(--solved);
+    }
+    to {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+
+  /* A pen scribbling a short squiggle, lifting off, and starting over. */
+  @keyframes write-pen {
+    0% {
+      transform: translate(0px, 0px) rotate(0deg);
+    }
+    8% {
+      transform: translate(1px, -2px) rotate(-10deg);
+    }
+    16% {
+      transform: translate(2px, 0px) rotate(6deg);
+    }
+    24% {
+      transform: translate(3px, -2px) rotate(-10deg);
+    }
+    32% {
+      transform: translate(4px, 0px) rotate(6deg);
+    }
+    40% {
+      transform: translate(5px, -2px) rotate(-10deg);
+    }
+    48% {
+      transform: translate(6px, 0px) rotate(6deg);
+    }
+    56% {
+      transform: translate(7px, -2px) rotate(-10deg);
+    }
+    64% {
+      transform: translate(8px, 0px) rotate(0deg);
+    }
+    74% {
+      transform: translate(8px, -3px) rotate(0deg);
+    }
+    90% {
+      transform: translate(0, -3px) rotate(0deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+
+  /* The squiggle left behind, drawn under the pen tip then fading away. */
+  @keyframes write-ink {
+    /* Hidden until drawing starts, or the round line cap shows as a dot. */
+    0% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    4% {
+      opacity: 1;
+    }
+    64%,
+    80% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    95%,
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
     }
   }
 
@@ -110,7 +198,7 @@
     min-height: 100%;
     background-color: var(--bg);
     color: var(--ink);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     transition:
       background-color 250ms,
       color 250ms;

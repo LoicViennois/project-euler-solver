@@ -1,3 +1,5 @@
+import titles from './titles.json';
+
 // The solution sources double as the catalogue: a problem is solved when its file exists.
 // Sources load lazily, so the catalogue costs nothing until a solution is opened.
 const sources = import.meta.glob<string>(
@@ -12,21 +14,22 @@ const loaders = new Map(
   }),
 );
 
-export const GROUP_SIZE = 10;
-
 /** Ids of the problems with a solution, in ascending order. */
 export const solvedIds = [...loaders.keys()].sort((a, b) => a - b);
 
-/** Every problem id shown, up to the end of the last started group of ten. */
-export const allIds = Array.from(
-  {
-    length: Math.ceil(Math.max(0, ...solvedIds) / GROUP_SIZE) * GROUP_SIZE,
-  },
-  (_, i) => i + 1,
-);
+/** The problem being worked on: the one after the last solved. */
+export const nextId = Math.max(0, ...solvedIds) + 1;
+
+/** Every problem id shown: the solved ones, then the one being worked on. */
+export const allIds = [...solvedIds, nextId];
 
 export function hasSolution(id: number): boolean {
   return loaders.has(id);
+}
+
+/** Title of a problem on Project Euler, refreshed by `pnpm titles`. */
+export function problemTitle(id: number): string | undefined {
+  return (titles as Record<string, string | undefined>)[id];
 }
 
 export function solutionName(id: number): string {
@@ -40,13 +43,4 @@ export function problemUrl(id: number): string {
 export function loadSource(id: number): Promise<string> {
   const load = loaders.get(id);
   return load ? load() : Promise.reject(new Error(`No solution for ${id}`));
-}
-
-/** Splits ids into consecutive groups of ten: 1-10, 11-20… */
-export function groupIds(ids: number[]): number[][] {
-  const groups: number[][] = [];
-  for (let i = 0; i < ids.length; i += GROUP_SIZE) {
-    groups.push(ids.slice(i, i + GROUP_SIZE));
-  }
-  return groups;
 }

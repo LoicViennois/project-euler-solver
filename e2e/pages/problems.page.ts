@@ -4,6 +4,7 @@ export class ProblemsPage {
   readonly page: Page;
   readonly heading: Locator;
   readonly solveAllButton: Locator;
+  readonly resetButton: Locator;
   readonly progress: Locator;
   readonly githubLink: Locator;
   readonly aboutButton: Locator;
@@ -14,6 +15,7 @@ export class ProblemsPage {
     this.page = page;
     this.heading = page.getByRole('heading', { level: 1 });
     this.solveAllButton = page.getByRole('button', { name: /^Solve all/ });
+    this.resetButton = page.getByRole('button', { name: 'Reset' });
     this.progress = page.getByRole('status').filter({ hasText: 'solved' });
     this.githubLink = page
       .getByRole('banner')
@@ -36,15 +38,11 @@ export class ProblemsPage {
     return this.page.getByTestId(`problem-${id}`);
   }
 
-  problemLink(id: number): Locator {
+  codeLink(id: number): Locator {
     return this.tile(id).getByRole('link', {
       name: `Problem ${id}`,
       exact: true,
     });
-  }
-
-  codeLink(id: number): Locator {
-    return this.tile(id).getByRole('link', { name: `Code for problem ${id}` });
   }
 
   solveButton(id: number): Locator {
@@ -57,9 +55,5 @@ export class ProblemsPage {
 
   duration(id: number): Locator {
     return this.tile(id).getByTestId('duration');
-  }
-
-  solveGroupButton(first: number, last: number): Locator {
-    return this.page.getByRole('button', { name: `Solve ${first} to ${last}` });
   }
 }

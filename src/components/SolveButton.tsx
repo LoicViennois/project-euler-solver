@@ -5,6 +5,8 @@ import { type Run, solve } from '../lib/solver';
 interface SolveButtonProps {
   id: number;
   run: Run | undefined;
+  /** Smaller, to sit on the same line as a heading. */
+  compact?: boolean;
   className?: string;
 }
 
@@ -19,7 +21,12 @@ const states = {
   failed: { Icon: Play, label: (id: number) => `Retry problem ${id}` },
 };
 
-export function SolveButton({ id, run, className }: SolveButtonProps) {
+export function SolveButton({
+  id,
+  run,
+  compact = false,
+  className,
+}: SolveButtonProps) {
   const status = run?.status ?? 'idle';
   const { Icon, label } = states[status];
   const spin = status === 'solving';
@@ -33,7 +40,7 @@ export function SolveButton({ id, run, className }: SolveButtonProps) {
       aria-disabled={busy}
       aria-label={label(id)}
       data-status={status}
-      className={`grid size-9 shrink-0 cursor-pointer place-items-center rounded-lg transition aria-disabled:cursor-progress ${
+      className={`grid shrink-0 ${compact ? 'size-7 rounded-md' : 'size-9 rounded-lg'} cursor-pointer place-items-center transition aria-disabled:cursor-progress ${
         status === 'solved'
           ? 'bg-solved/15 text-solved hover:bg-solved/25'
           : busy
@@ -44,7 +51,7 @@ export function SolveButton({ id, run, className }: SolveButtonProps) {
       <Icon
         key={status}
         aria-hidden
-        className={`size-4 ${spin ? 'animate-spin' : status === 'solved' ? 'animate-pop' : ''}`}
+        className={`${compact ? 'size-3.5' : 'size-4'} ${spin ? 'animate-spin' : status === 'solved' ? 'animate-pop' : ''}`}
       />
     </button>
   );

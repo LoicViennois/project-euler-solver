@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
-import { Route as CodeRouteImport } from './routes/code'
 import { Route as CodeIndexRouteImport } from './routes/code.index'
 import { Route as CodeIdRouteImport } from './routes/code.$id'
 
@@ -25,26 +24,20 @@ const SplatRoute = SplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CodeRoute = CodeRouteImport.update({
-  id: '/code',
-  path: '/code',
+const CodeIndexRoute = CodeIndexRouteImport.update({
+  id: '/code/',
+  path: '/code/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CodeIndexRoute = CodeIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CodeRoute,
-} as any)
 const CodeIdRoute = CodeIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => CodeRoute,
+  id: '/code/$id',
+  path: '/code/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/code': typeof CodeRouteWithChildren
   '/code/$id': typeof CodeIdRoute
   '/code/': typeof CodeIndexRoute
 }
@@ -58,22 +51,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/code': typeof CodeRouteWithChildren
   '/code/$id': typeof CodeIdRoute
   '/code/': typeof CodeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/code' | '/code/$id' | '/code/'
+  fullPaths: '/' | '/$' | '/code/$id' | '/code/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/$' | '/code/$id' | '/code'
-  id: '__root__' | '/' | '/$' | '/code' | '/code/$id' | '/code/'
+  id: '__root__' | '/' | '/$' | '/code/$id' | '/code/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
-  CodeRoute: typeof CodeRouteWithChildren
+  CodeIdRoute: typeof CodeIdRoute
+  CodeIndexRoute: typeof CodeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,46 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/code': {
-      id: '/code'
-      path: '/code'
-      fullPath: '/code'
-      preLoaderRoute: typeof CodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/code/': {
       id: '/code/'
-      path: '/'
+      path: '/code'
       fullPath: '/code/'
       preLoaderRoute: typeof CodeIndexRouteImport
-      parentRoute: typeof CodeRoute
+      parentRoute: typeof rootRouteImport
     }
     '/code/$id': {
       id: '/code/$id'
-      path: '/$id'
+      path: '/code/$id'
       fullPath: '/code/$id'
       preLoaderRoute: typeof CodeIdRouteImport
-      parentRoute: typeof CodeRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface CodeRouteChildren {
-  CodeIdRoute: typeof CodeIdRoute
-  CodeIndexRoute: typeof CodeIndexRoute
-}
-
-const CodeRouteChildren: CodeRouteChildren = {
-  CodeIdRoute: CodeIdRoute,
-  CodeIndexRoute: CodeIndexRoute,
-}
-
-const CodeRouteWithChildren = CodeRoute._addFileChildren(CodeRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
-  CodeRoute: CodeRouteWithChildren,
+  CodeIdRoute: CodeIdRoute,
+  CodeIndexRoute: CodeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

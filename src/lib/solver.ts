@@ -77,6 +77,18 @@ export function solve(ids: number[]): void {
   }
 }
 
+/** Forgets every result and stops the solution running, if any. */
+export function reset(): void {
+  queue.length = 0;
+  runs.clear();
+  if (current !== null) {
+    worker?.terminate();
+    worker = null;
+    current = null;
+  }
+  emit();
+}
+
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);

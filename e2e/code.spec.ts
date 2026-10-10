@@ -12,33 +12,34 @@ test.describe('Code', () => {
 
     const code = new CodePage(page);
     await code.expectSolution(1);
-    await expect(code.sidebarLink(1)).toHaveAttribute('aria-current', 'page');
+    await expect(page.getByRole('main')).toContainText(
+      'Problem 1 · Multiples of 3 or 5',
+    );
     await expect(
-      page.getByRole('link', { name: 'Problem 1 on Project Euler' }),
+      page.getByRole('link', { name: /^Read problem 1 on Project Euler/ }),
     ).toHaveAttribute('href', 'https://projecteuler.net/problem=1');
   });
 
-  test('switches between solutions from the sidebar', async ({ page }) => {
+  test('switches between solutions with the arrow keys', async ({ page }) => {
     const code = new CodePage(page);
     await code.goto(1);
 
-    await code.sidebarLink(2).click();
-
+    await page.keyboard.press('ArrowRight');
     await code.expectSolution(2);
-    await expect(code.sidebarLink(2)).toHaveAttribute('aria-current', 'page');
+
+    await page.keyboard.press('ArrowLeft');
+    await code.expectSolution(1);
   });
 
   test('moves to the previous and next solutions', async ({ page }) => {
     const code = new CodePage(page);
     await code.goto(1);
-    await expect(
-      code.otherSolutions.getByRole('link', { name: 'euler000' }),
-    ).toHaveCount(0);
+    await expect(code.otherSolutions.getByRole('link')).toHaveCount(1);
 
-    await code.otherSolutions.getByRole('link', { name: 'euler002' }).click();
+    await code.siblingLink(2).click();
     await code.expectSolution(2);
 
-    await code.otherSolutions.getByRole('link', { name: 'euler001' }).click();
+    await code.siblingLink(1).click();
     await code.expectSolution(1);
   });
 
