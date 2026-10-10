@@ -1,6 +1,6 @@
 import { MessageCircle } from 'lucide-react';
 
-import { commitUrl, repoUrl, shortSha } from '../lib/build-info';
+import { commitSha, commitUrl, repoUrl, shortSha } from '../lib/build-info';
 import { Logo } from './Logo';
 import { Modal } from './Modal';
 
@@ -24,6 +24,7 @@ export function AboutDialog({ open, onClose }: AboutDialogProps) {
             <span className="font-bold">Project Euler Solver</span>, build{' '}
             <a
               href={commitUrl}
+              title={commitSha}
               target="_blank"
               rel="noopener"
               data-testid="commit-link"
