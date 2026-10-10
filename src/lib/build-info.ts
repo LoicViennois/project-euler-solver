@@ -1,4 +1,4 @@
-const REPO_URL = 'https://github.com/LoicViennois/Project-Euler-Solver';
+const REPO_URL = 'https://github.com/LoicViennois/project-euler-solver';
 
 export const commitSha = __COMMIT_SHA__;
 export const shortSha = commitSha.slice(0, 7);
