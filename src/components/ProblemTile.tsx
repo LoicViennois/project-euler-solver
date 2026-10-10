@@ -7,14 +7,6 @@ import { formatDuration } from '../lib/format-time';
 import { useRun } from '../lib/solver';
 import { SolveButton } from './SolveButton';
 
-const ONE_MINUTE = 60_000;
-
-/** Share of Project Euler's one-minute budget used, on a log scale so fast runs still show. */
-function budgetShare(duration: number): number {
-  const share = Math.log10(duration + 1) / Math.log10(ONE_MINUTE + 1);
-  return Math.min(1, Math.max(0.03, share));
-}
-
 export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
   const run = useRun(id);
   const available = hasSolution(id);
@@ -25,7 +17,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
 
   const title = (
     <>
-      <span className="text-sm font-medium text-ink-soft">Problem</span>{' '}
+      <span className="text-base font-medium text-ink-soft">Problem</span>{' '}
       <span className="text-xl font-bold tabular-nums">{id}</span>
     </>
   );
@@ -75,46 +67,32 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         <SolveButton id={id} run={run} className="relative z-10" />
       </div>
 
-      <p className="flex min-w-0 items-baseline gap-2 font-digits text-lg">
-        <span aria-hidden className="text-ink-soft">
-          =
-        </span>
-        <span className="sr-only">Answer: </span>
-        {solved ? (
-          <span
-            key={run.value}
-            data-testid="answer"
-            className="inline-block animate-reveal font-semibold break-all"
-          >
-            {run.value}
+      <div className="mt-auto flex min-w-0 items-baseline gap-2 font-digits">
+        <p className="flex min-w-0 items-baseline gap-2 text-lg">
+          <span aria-hidden className="text-ink-soft">
+            =
           </span>
-        ) : (
-          <span data-testid="answer" className="text-ink-soft">
-            {run?.status === 'failed' ? 'Failed' : '?'}
-          </span>
-        )}
-      </p>
-
-      <div className="mt-auto flex items-center gap-3 text-sm text-ink-soft">
-        <div
-          aria-hidden
-          className="h-1 flex-1 overflow-hidden rounded-full bg-line"
-        >
-          <div
-            className={`h-full origin-left rounded-full transition-transform duration-700 ease-out ${
-              solved ? 'bg-solved' : 'animate-pulse bg-copper'
-            }`}
-            style={{
-              transform: `scaleX(${solved ? budgetShare(run.duration) : run?.status === 'solving' ? 0.15 : 0})`,
-            }}
-          />
-        </div>
-        <span
-          data-testid="duration"
-          className="min-w-14 text-right font-digits"
-        >
+          <span className="sr-only">Answer: </span>
+          {solved ? (
+            <span
+              key={run.value}
+              data-testid="answer"
+              className="inline-block animate-reveal font-semibold break-all"
+            >
+              {run.value}
+            </span>
+          ) : (
+            <span
+              data-testid="answer"
+              className={`text-ink-soft ${run?.status === 'solving' ? 'animate-pulse' : ''}`}
+            >
+              {run?.status === 'failed' ? 'Failed' : '?'}
+            </span>
+          )}
+        </p>
+        <span data-testid="duration" className="text-sm text-ink-soft">
           {solved && (
-            <span className="animate-fade-in">
+            <span className="inline-block animate-fade-in">
               <span className="sr-only">Solved in </span>
               {formatDuration(run.duration)}
             </span>
@@ -122,7 +100,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         </span>
         <ArrowRight
           aria-hidden
-          className="-ml-1 size-4 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:text-copper-text group-hover:opacity-100"
+          className="ml-auto size-4 shrink-0 -translate-x-1 self-center text-copper-text opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100"
         />
       </div>
     </article>

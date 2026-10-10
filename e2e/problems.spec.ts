@@ -48,6 +48,20 @@ test.describe('Problems', () => {
     await expect(problems.tile(10)).toHaveAttribute('data-solved', 'true');
   });
 
+  test('resets the answers', async () => {
+    await expect(problems.resetButton).toHaveAttribute('aria-disabled', 'true');
+    await problems.solveButton(1).click();
+    await expect(problems.answer(1)).toHaveText('233168');
+
+    await problems.resetButton.click();
+
+    await expect(problems.answer(1)).toHaveText('?');
+    await expect(problems.duration(1)).toHaveText('');
+    await expect(problems.progress).toHaveText('0 of 67 solved');
+    await expect(problems.resetButton).toHaveAttribute('aria-disabled', 'true');
+    await expect(problems.resetButton).toBeFocused();
+  });
+
   test('solves a problem without opening its code', async ({ page }) => {
     await problems.solveButton(2).click();
 

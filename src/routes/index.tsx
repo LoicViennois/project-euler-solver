@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Play } from 'lucide-react';
+import { Play, RotateCcw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { ProblemTile } from '../components/ProblemTile';
 import { allIds, hasSolution, solvedIds } from '../lib/catalog';
 import { formatDuration } from '../lib/format-time';
-import { type Run, solve, useRuns } from '../lib/solver';
+import { reset, type Run, solve, useRuns } from '../lib/solver';
 
 export const Route = createFileRoute('/')({
   component: ProblemsPage,
@@ -65,6 +65,19 @@ function ProblemsPage() {
             >
               <Play className="size-4" aria-hidden />
               Solve all {solvedIds.length}
+            </button>
+            <button
+              type="button"
+              onClick={() => runs.size > 0 && reset()}
+              // aria-disabled rather than disabled keeps focus on the button.
+              aria-disabled={runs.size === 0}
+              className="group btn btn-ghost aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:bg-transparent"
+            >
+              <RotateCcw
+                className="size-4 transition-transform duration-300 group-aria-[disabled=false]:group-hover:-rotate-90"
+                aria-hidden
+              />
+              Reset
             </button>
             <p role="status" className="text-ink-soft">
               <span
