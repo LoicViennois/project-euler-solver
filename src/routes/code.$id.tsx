@@ -104,12 +104,12 @@ function CodePage() {
         >
           {solutionName(id)}.ts
         </h1>
-        <p className="mt-1 text-lg text-ink-soft">
+        <p className="mt-1.5 text-xl text-balance text-ink-soft sm:text-2xl">
           Problem {id}
           {problemTitle(id) && (
             <>
               {' · '}
-              <span className="text-ink">{problemTitle(id)}</span>
+              <span className="font-semibold text-ink">{problemTitle(id)}</span>
             </>
           )}
         </p>
