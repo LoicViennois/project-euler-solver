@@ -51,8 +51,22 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         </div>
         <p className="flex items-center gap-2 text-ink-soft">
           <span aria-hidden className="relative h-4 w-6 shrink-0">
-            <Pencil className="absolute bottom-px left-0 size-4 animate-write-pen" />
-            <span className="absolute bottom-0 left-px h-px w-2 origin-left animate-write-ink rounded-full bg-current" />
+            <Pencil className="absolute bottom-px left-0 size-4 origin-bottom-left animate-write-pen" />
+            <svg
+              viewBox="0 0 8 3"
+              className="absolute bottom-0 left-px h-[3px] w-2 overflow-visible"
+            >
+              <path
+                d="M0 2 Q1 0 2 2 T4 2 T6 2 T8 2"
+                pathLength={1}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={0.8}
+                strokeLinecap="round"
+                strokeDasharray={1}
+                className="animate-write-ink"
+              />
+            </svg>
           </span>
           Working on it…
         </p>
