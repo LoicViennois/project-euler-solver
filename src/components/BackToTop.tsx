@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 /** Past this many pixels scrolled, the list is long enough to need a way back up. */
 const THRESHOLD = 600;
 
-/** Floating button bringing the page back to the top, shown on small screens only. */
+/** Floating button bringing the page back to the top of a long page. */
 export function BackToTop({ targetId }: { targetId: string }) {
   const [visible, setVisible] = useState(false);
 
@@ -33,7 +33,7 @@ export function BackToTop({ targetId }: { targetId: string }) {
       type="button"
       onClick={goToTop}
       aria-label="Back to top"
-      className="fixed right-4 bottom-5 z-30 grid size-12 animate-rise cursor-pointer place-items-center rounded-full bg-copper text-copper-ink shadow-[0_8px_20px_-6px_var(--copper)] transition active:scale-90 sm:hidden"
+      className="fixed right-4 bottom-5 z-30 sm:right-6 sm:bottom-6 grid size-12 animate-rise cursor-pointer place-items-center rounded-full bg-copper text-copper-ink shadow-[0_8px_20px_-6px_var(--copper)] transition hover:-translate-y-0.5 active:scale-90"
     >
       <ArrowUp className="size-5" aria-hidden />
     </button>

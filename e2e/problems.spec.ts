@@ -81,16 +81,23 @@ test.describe('Problems', () => {
     await expect(problems.answer(3)).toHaveText('6857');
   });
 
-  test('goes back to the top of a long list on mobile', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    const backToTop = page.getByRole('button', { name: 'Back to top' });
-    await expect(backToTop).toHaveCount(0);
+  for (const [device, viewport] of [
+    ['mobile', { width: 390, height: 844 }],
+    ['desktop', { width: 1280, height: 800 }],
+  ] as const) {
+    test(`goes back to the top of a long list on ${device}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      const backToTop = page.getByRole('button', { name: 'Back to top' });
+      await expect(backToTop).toHaveCount(0);
 
-    await problems.tile(60).scrollIntoViewIfNeeded();
-    await backToTop.click();
+      await problems.tile(60).scrollIntoViewIfNeeded();
+      await backToTop.click();
 
-    await expect(problems.heading).toBeFocused();
-    await expect.poll(() => page.evaluate('window.scrollY')).toBe(0);
-    await expect(backToTop).toHaveCount(0);
-  });
+      await expect(problems.heading).toBeFocused();
+      await expect.poll(() => page.evaluate('window.scrollY')).toBe(0);
+      await expect(backToTop).toHaveCount(0);
+    });
+  }
 });

@@ -121,7 +121,7 @@ function ProblemsPage() {
 
       <ProgressStrip runs={runs} />
 
-      <ul className="grid gap-2.5 max-sm:pb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid gap-2.5 pb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {allIds.map((id, index) => (
           <li
             key={id}
