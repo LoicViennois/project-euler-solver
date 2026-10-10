@@ -36,15 +36,11 @@ export class ProblemsPage {
     return this.page.getByTestId(`problem-${id}`);
   }
 
-  problemLink(id: number): Locator {
+  codeLink(id: number): Locator {
     return this.tile(id).getByRole('link', {
       name: `Problem ${id}`,
       exact: true,
     });
-  }
-
-  codeLink(id: number): Locator {
-    return this.tile(id).getByRole('link', { name: `Code for problem ${id}` });
   }
 
   solveButton(id: number): Locator {

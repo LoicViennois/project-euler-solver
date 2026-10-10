@@ -13,7 +13,7 @@ test.describe('Code', () => {
     const code = new CodePage(page);
     await code.expectSolution(1);
     await expect(
-      page.getByRole('link', { name: 'Problem 1 on Project Euler' }),
+      page.getByRole('link', { name: /^Read problem 1 on Project Euler/ }),
     ).toHaveAttribute('href', 'https://projecteuler.net/problem=1');
   });
 

@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-router';
 import {
   ArrowLeft,
+  BookOpen,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -95,24 +96,30 @@ function CodePage() {
         </nav>
       </div>
 
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-        <div>
-          <h1
-            id="solution-title"
-            className="font-digits text-2xl font-bold sm:text-3xl"
-          >
-            {solutionName(id)}.ts
-          </h1>
-          <a
-            href={problemUrl(id)}
-            target="_blank"
-            rel="noopener"
-            className="link mt-1 inline-flex items-center gap-1.5 text-ink-soft"
-          >
-            Problem {id} on Project Euler
-            <ExternalLink className="size-3.5" aria-hidden />
-          </a>
-        </div>
+      <h1
+        id="solution-title"
+        className="mb-4 font-digits text-2xl font-bold sm:text-3xl"
+      >
+        {solutionName(id)}.ts
+      </h1>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+        <a
+          href={problemUrl(id)}
+          target="_blank"
+          rel="noopener"
+          className="group btn border border-copper/60 bg-surface px-4 py-2.5 text-base text-ink hover:border-copper hover:bg-tint"
+        >
+          <BookOpen className="size-5 text-copper-text" aria-hidden />
+          <span>
+            Read problem {id} on{' '}
+            <span className="text-copper-text">Project Euler</span>
+          </span>
+          <ExternalLink
+            className="size-4 text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden
+          />
+          <span className="sr-only">(opens in a new tab)</span>
+        </a>
         <div className="flex items-center gap-3">
           <p
             role="status"
