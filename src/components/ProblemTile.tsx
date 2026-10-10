@@ -79,7 +79,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         <SolveButton id={id} run={run} className="relative z-10" />
       </div>
 
-      <div className="mt-auto flex min-w-0 items-baseline gap-2 font-digits">
+      <div className="mt-auto flex min-w-0 items-center gap-2 font-digits">
         <p className="flex min-w-0 items-baseline gap-2 text-lg">
           <span aria-hidden className="text-ink-soft">
             =
@@ -104,11 +104,11 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         </p>
         <span
           data-testid="duration"
-          className="text-sm font-medium"
+          className="ml-auto shrink-0 text-sm font-medium"
           style={solved ? { color: durationColor(run.duration) } : undefined}
         >
           {solved && (
-            <span className="inline-flex animate-fade-in items-center gap-1.5 self-center">
+            <span className="inline-flex animate-fade-in items-center gap-1.5">
               <span aria-hidden className="size-1.5 rounded-full bg-current" />
               <span className="sr-only">Solved in </span>
               {formatDuration(run.duration)}
@@ -117,7 +117,8 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
         </span>
         <ArrowRight
           aria-hidden
-          className="ml-auto size-4 shrink-0 -translate-x-1 self-center text-copper-text opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100"
+          // Takes no room until hovered, so the time sits flush right.
+          className="-ml-2 h-4 w-0 shrink-0 -translate-x-1 text-copper-text opacity-0 transition-all group-hover:ml-0 group-hover:w-4 group-hover:translate-x-0 group-hover:opacity-100"
         />
       </div>
     </article>
