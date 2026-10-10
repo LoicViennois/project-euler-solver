@@ -72,8 +72,8 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
             : 'border-line bg-surface hover:border-copper/60'
       }`}
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 pt-1">
+      <div>
+        <div className="flex items-center justify-between gap-2">
           <h2 className="leading-none">
             {/* Stretched over the whole card: the card is the way to its code. */}
             <Link
@@ -84,14 +84,14 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
               {heading}
             </Link>
           </h2>
-          {name && (
-            <p className="mt-1.5 leading-snug font-medium text-pretty text-copper-text">
-              {name}
-            </p>
-          )}
+          {/* Above the stretched link, so it stays clickable on its own. */}
+          <SolveButton id={id} run={run} compact className="relative z-10" />
         </div>
-        {/* Above the stretched link, so it stays clickable on its own. */}
-        <SolveButton id={id} run={run} className="relative z-10" />
+        {name && (
+          <p className="mt-1.5 leading-snug font-medium text-pretty text-copper-text">
+            {name}
+          </p>
+        )}
       </div>
 
       <div className="mt-auto flex min-w-0 items-center gap-2 font-digits">
