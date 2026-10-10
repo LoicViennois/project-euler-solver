@@ -99,7 +99,7 @@ function ProblemsPage() {
             </p>
           </div>
         </div>
-        <figure className="flex flex-col items-start gap-2 lg:items-end">
+        <div className="flex lg:justify-end">
           <a
             href="https://projecteuler.net/progress=LoicViennois"
             target="_blank"
@@ -114,10 +114,7 @@ function ProblemsPage() {
               className="rounded-md border border-line"
             />
           </a>
-          <figcaption className="text-sm text-ink-soft">
-            Author&apos;s Project Euler profile
-          </figcaption>
-        </figure>
+        </div>
       </section>
 
       <ProgressStrip runs={runs} />
