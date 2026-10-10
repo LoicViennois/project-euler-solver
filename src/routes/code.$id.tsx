@@ -17,6 +17,7 @@ import { SolveButton } from '../components/SolveButton';
 import {
   hasSolution,
   loadSource,
+  problemTitle,
   problemUrl,
   solutionName,
   solvedIds,
@@ -96,12 +97,23 @@ function CodePage() {
         </nav>
       </div>
 
-      <h1
-        id="solution-title"
-        className="mb-4 font-digits text-2xl font-bold sm:text-3xl"
-      >
-        {solutionName(id)}.ts
-      </h1>
+      <div className="mb-4">
+        <h1
+          id="solution-title"
+          className="font-digits text-2xl font-bold sm:text-3xl"
+        >
+          {solutionName(id)}.ts
+        </h1>
+        <p className="mt-1 text-lg text-ink-soft">
+          Problem {id}
+          {problemTitle(id) && (
+            <>
+              {' · '}
+              <span className="text-ink">{problemTitle(id)}</span>
+            </>
+          )}
+        </p>
+      </div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <a
           href={problemUrl(id)}

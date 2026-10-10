@@ -12,6 +12,9 @@ test.describe('Code', () => {
 
     const code = new CodePage(page);
     await code.expectSolution(1);
+    await expect(page.getByRole('main')).toContainText(
+      'Problem 1 · Multiples of 3 or 5',
+    );
     await expect(
       page.getByRole('link', { name: /^Read problem 1 on Project Euler/ }),
     ).toHaveAttribute('href', 'https://projecteuler.net/problem=1');

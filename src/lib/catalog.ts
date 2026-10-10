@@ -1,3 +1,5 @@
+import titles from './titles.json';
+
 // The solution sources double as the catalogue: a problem is solved when its file exists.
 // Sources load lazily, so the catalogue costs nothing until a solution is opened.
 const sources = import.meta.glob<string>(
@@ -23,6 +25,11 @@ export const allIds = [...solvedIds, nextId];
 
 export function hasSolution(id: number): boolean {
   return loaders.has(id);
+}
+
+/** Title of a problem on Project Euler, refreshed by `pnpm titles`. */
+export function problemTitle(id: number): string | undefined {
+  return (titles as Record<string, string | undefined>)[id];
 }
 
 export function solutionName(id: number): string {

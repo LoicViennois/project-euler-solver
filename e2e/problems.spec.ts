@@ -16,6 +16,7 @@ test.describe('Problems', () => {
     );
     await expect(problems.progress).toHaveText('0 of 67 solved');
     await expect(problems.codeLink(1)).toHaveAttribute('href', '/code/1');
+    await expect(problems.tile(1)).toContainText('Multiples of 3 or 5');
     await expect(problems.answer(1)).toHaveText('?');
   });
 
