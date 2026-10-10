@@ -5,4 +5,3 @@ export const shortSha = commitSha.slice(0, 7);
 export const commitUrl =
   commitSha !== 'dev' ? `${REPO_URL}/commit/${commitSha}` : REPO_URL;
 export const repoUrl = REPO_URL;
-export const sponsorUrl = 'https://github.com/sponsors/LoicViennois';

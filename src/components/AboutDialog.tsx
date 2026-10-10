@@ -1,6 +1,6 @@
-import { Coffee, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
-import { commitUrl, repoUrl, shortSha, sponsorUrl } from '../lib/build-info';
+import { commitUrl, repoUrl, shortSha } from '../lib/build-info';
 import { Logo } from './Logo';
 import { Modal } from './Modal';
 
@@ -44,59 +44,38 @@ export function AboutDialog({ open, onClose }: AboutDialogProps) {
             </span>
           </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <section className="rounded-xl border border-line p-4">
-            <h3 className="mb-1 flex items-center gap-2 font-bold">
-              <MessageCircle className="size-4" aria-hidden />
-              Send feedback
-            </h3>
-            <ul className="space-y-1 text-ink-soft">
-              <li>
-                Found a bug or have an idea?
-                <br />
-                <a
-                  href={`${repoUrl}/issues/new`}
-                  target="_blank"
-                  rel="noopener"
-                  className="text-ink"
-                >
-                  Open an issue on GitHub
-                </a>
-              </li>
-              <li>
-                Want to say hi?
-                <br />
-                <a
-                  href="https://www.reddit.com/message/compose/?to=LoicViennois"
-                  target="_blank"
-                  rel="noopener"
-                  className="text-ink"
-                >
-                  Message me on Reddit
-                </a>
-              </li>
-            </ul>
-          </section>
-          <section className="rounded-xl border border-line p-4">
-            <h3 className="mb-1 flex items-center gap-2 font-bold">
-              <Coffee className="size-4" aria-hidden />
-              Buy me a coffee
-            </h3>
-            <p className="text-ink-soft">
-              If these solutions helped you, you can buy me a coffee!
+        <section className="rounded-xl border border-line p-4">
+          <h3 className="mb-1 flex items-center gap-2 font-bold">
+            <MessageCircle className="size-4" aria-hidden />
+            Send feedback
+          </h3>
+          <ul className="space-y-1 text-ink-soft">
+            <li>
+              Found a bug or have an idea?
               <br />
               <a
-                href={sponsorUrl}
+                href={`${repoUrl}/issues/new`}
                 target="_blank"
                 rel="noopener"
-                data-testid="sponsor-link"
                 className="text-ink"
               >
-                Support me on GitHub Sponsors
+                Open an issue on GitHub
               </a>
-            </p>
-          </section>
-        </div>
+            </li>
+            <li>
+              Want to say hi?
+              <br />
+              <a
+                href="https://www.reddit.com/message/compose/?to=LoicViennois"
+                target="_blank"
+                rel="noopener"
+                className="text-ink"
+              >
+                Message me on Reddit
+              </a>
+            </li>
+          </ul>
+        </section>
         <p className="border-t border-line pt-4 text-sm text-ink-soft">
           This program is free software, released under the{' '}
           <a
