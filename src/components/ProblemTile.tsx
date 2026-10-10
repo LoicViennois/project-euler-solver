@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { PencilLine } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import { hasSolution, problemTitle } from '../lib/catalog';
@@ -50,10 +50,10 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
           )}
         </div>
         <p className="flex items-center gap-2 text-ink-soft">
-          <PencilLine
-            className="size-4 shrink-0 origin-bottom-left animate-wiggle"
-            aria-hidden
-          />
+          <span aria-hidden className="relative h-4 w-6 shrink-0">
+            <Pencil className="absolute bottom-px left-0 size-4 animate-write-pen" />
+            <span className="absolute bottom-0 left-px h-px w-2 origin-left animate-write-ink rounded-full bg-current" />
+          </span>
           Working on it…
         </p>
       </article>
