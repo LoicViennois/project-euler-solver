@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Play, RotateCcw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+import { BackToTop } from '../components/BackToTop';
 import { ProblemTile } from '../components/ProblemTile';
 import { allIds, hasSolution, solvedIds } from '../lib/catalog';
 import { formatDuration } from '../lib/format-time';
@@ -39,6 +40,7 @@ function ProblemsPage() {
         <div className="max-w-2xl">
           <h1
             id="intro-title"
+            tabIndex={-1}
             className="mb-4 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
           >
             Project Euler, <br />
@@ -119,7 +121,7 @@ function ProblemsPage() {
 
       <ProgressStrip runs={runs} />
 
-      <ul className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid gap-2.5 max-sm:pb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {allIds.map((id, index) => (
           <li
             key={id}
@@ -134,6 +136,8 @@ function ProblemsPage() {
           </li>
         ))}
       </ul>
+
+      <BackToTop targetId="intro-title" />
     </>
   );
 }
