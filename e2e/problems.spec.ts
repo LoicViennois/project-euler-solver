@@ -75,7 +75,7 @@ test.describe('Problems', () => {
 
     await problems.codeLink(3).click();
     await expect(page).toHaveURL('/code/3');
-    await page.getByRole('link', { name: 'All problems' }).click();
+    await page.getByRole('link', { name: 'Problems list' }).click();
 
     await expect(problems.answer(3)).toHaveText('6857');
   });

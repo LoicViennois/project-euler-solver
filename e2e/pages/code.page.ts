@@ -12,7 +12,7 @@ export class CodePage {
     this.page = page;
     this.heading = page.getByRole('heading', { level: 1 });
     this.code = page.locator('pre code.hljs');
-    this.backLink = page.getByRole('link', { name: 'All problems' });
+    this.backLink = page.getByRole('link', { name: 'Problems list' });
     this.answer = page.getByRole('main').getByTestId('answer');
     this.otherSolutions = page.getByRole('navigation', {
       name: 'Other solutions',

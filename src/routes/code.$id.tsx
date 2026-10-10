@@ -88,7 +88,7 @@ function CodePage() {
             className="size-5 transition-transform group-hover:-translate-x-1"
             aria-hidden
           />
-          All problems
+          Problems list
         </Link>
         <nav aria-label="Other solutions" className="flex items-center gap-2">
           <SiblingLink id={previous} direction="previous" />
