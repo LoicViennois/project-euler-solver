@@ -4,7 +4,7 @@ export function BuildInfo() {
   return (
     <footer
       data-testid="build-info"
-      className="mx-auto max-w-6xl px-4 pb-8 text-sm text-ink-soft lg:px-6"
+      className="fixed bottom-2 left-2 z-30 rounded-full bg-bg/80 px-2 py-0.5 text-xs text-ink-soft backdrop-blur-sm"
     >
       Build{' '}
       <a
