@@ -49,7 +49,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       <article
         data-testid={`problem-${id}`}
         data-number={id}
-        className={`relative flex h-full flex-col justify-between gap-2 rounded-xl border-[1.5px] border-dashed border-line px-3.5 py-3 before:text-ink/5 ${watermark}`}
+        className={`relative flex h-full flex-col justify-between gap-2 rounded-xl border border-dashed border-line px-3.5 py-3 before:text-ink/5 ${watermark}`}
       >
         <div>
           <h2 className="leading-none">{heading}</h2>
@@ -85,7 +85,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       data-testid={`problem-${id}`}
       data-solved={solved}
       data-number={id}
-      className={`group relative flex h-full flex-col gap-2 rounded-xl border-[1.5px] px-3.5 py-3 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
+      className={`group relative flex h-full flex-col gap-2 rounded-xl border px-3.5 py-3 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
         solved
           ? `border-solved/40 bg-solved-surface before:text-solved/10 ${solvedOnMount ? '' : 'animate-glow'}`
           : busy
