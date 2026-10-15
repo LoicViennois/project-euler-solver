@@ -22,7 +22,7 @@ function durationColor(duration: number): string {
 
 // A big faint numeral behind the card, drawn from data-number so it stays out of the text.
 const watermark =
-  'isolate overflow-hidden before:pointer-events-none before:absolute before:-right-1 before:-bottom-5 before:-z-10 before:font-digits before:text-[5.5rem] before:leading-none before:font-bold before:tracking-tighter before:transition-colors before:duration-300 before:content-[attr(data-number)]';
+  'isolate overflow-hidden before:pointer-events-none before:absolute before:-right-1 before:-bottom-4 before:-z-10 before:font-digits before:text-[4.5rem] before:leading-none before:font-bold before:tracking-tighter before:transition-colors before:duration-300 before:content-[attr(data-number)]';
 
 export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
   const run = useRun(id);
@@ -39,7 +39,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
     </span>
   );
   const title = name && (
-    <p className="mt-2 text-lg leading-snug font-semibold text-pretty">
+    <p className="mt-1.5 text-[1.0625rem] leading-snug font-semibold text-pretty">
       {name}
     </p>
   );
@@ -49,13 +49,13 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       <article
         data-testid={`problem-${id}`}
         data-number={id}
-        className={`relative flex h-full flex-col justify-between gap-3 rounded-xl border border-dashed border-line p-4 before:text-ink/5 ${watermark}`}
+        className={`relative flex h-full flex-col justify-between gap-2 rounded-xl border-[1.5px] border-dashed border-line px-3.5 py-3 before:text-ink/5 ${watermark}`}
       >
         <div>
           <h2 className="leading-none">{heading}</h2>
           {title}
         </div>
-        <p className="flex items-center gap-2 border-t border-dashed border-line pt-3 text-ink-soft">
+        <p className="flex items-center gap-2 border-t border-dashed border-line pt-2 text-ink-soft">
           <span aria-hidden className="relative h-4 w-6 shrink-0">
             <Pencil className="absolute bottom-px left-0 size-4 origin-bottom-left animate-write-pen" />
             <svg
@@ -85,7 +85,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       data-testid={`problem-${id}`}
       data-solved={solved}
       data-number={id}
-      className={`group relative flex h-full flex-col gap-3 rounded-xl border p-4 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
+      className={`group relative flex h-full flex-col gap-2 rounded-xl border-[1.5px] px-3.5 py-3 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
         solved
           ? `border-solved/40 bg-solved-surface before:text-solved/10 ${solvedOnMount ? '' : 'animate-glow'}`
           : busy
@@ -112,7 +112,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       </div>
 
       <div
-        className={`mt-auto flex min-w-0 items-center gap-2 border-t border-dashed pt-3 font-digits transition-colors duration-300 ${
+        className={`mt-auto flex min-w-0 items-center gap-2 border-t border-dashed pt-2 font-digits transition-colors duration-300 ${
           solved ? 'border-solved/30' : 'border-line'
         }`}
       >
