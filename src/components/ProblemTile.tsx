@@ -4,20 +4,25 @@ import { memo, useState } from 'react';
 
 import { hasSolution, problemTitle } from '../lib/catalog';
 import { formatDuration } from '../lib/format-time';
-import { useRun } from '../lib/solver';
+import { type Run, useRun } from '../lib/solver';
 import { SolveButton } from './SolveButton';
 
 const ONE_MINUTE = 60_000;
 
-/** Green for instant runs to red at Project Euler's one-minute limit, on a log scale. */
+/** How close a run came to Project Euler's one-minute limit, from 0 to 1 on a log scale. */
+function durationShare(duration: number): number {
+  return Math.min(1, Math.log10(duration + 1) / Math.log10(ONE_MINUTE + 1));
+}
+
+/** Green for instant runs to red at the one-minute limit. */
 function durationColor(duration: number): string {
-  const share = Math.min(
-    1,
-    Math.log10(duration + 1) / Math.log10(ONE_MINUTE + 1),
-  );
-  const hue = 145 - share * 120;
+  const hue = 145 - durationShare(duration) * 120;
   return `oklch(var(--time-lightness) 0.16 ${hue})`;
 }
+
+// A big faint numeral behind the card, drawn from data-number so it stays out of the text.
+const watermark =
+  'isolate overflow-hidden before:pointer-events-none before:absolute before:-right-1 before:-bottom-5 before:-z-10 before:font-digits before:text-[5.5rem] before:leading-none before:font-bold before:tracking-tighter before:transition-colors before:duration-300 before:content-[attr(data-number)]';
 
 export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
   const run = useRun(id);
@@ -29,27 +34,28 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
 
   const name = problemTitle(id);
   const heading = (
-    <>
-      <span className="text-base font-medium text-ink-soft">Problem</span>{' '}
-      <span className="text-xl font-bold tabular-nums">{id}</span>
-    </>
+    <span className="font-digits text-xs font-semibold tracking-widest text-copper-text uppercase">
+      Problem {id}
+    </span>
+  );
+  const title = name && (
+    <p className="mt-2 text-lg leading-snug font-semibold text-pretty">
+      {name}
+    </p>
   );
 
   if (!available) {
     return (
       <article
         data-testid={`problem-${id}`}
-        className="flex h-full flex-col justify-between gap-3 rounded-xl border border-dashed border-line p-3.5"
+        data-number={id}
+        className={`relative flex h-full flex-col justify-between gap-3 rounded-xl border border-dashed border-line p-4 before:text-ink/5 ${watermark}`}
       >
         <div>
           <h2 className="leading-none">{heading}</h2>
-          {name && (
-            <p className="mt-1.5 leading-snug font-medium text-copper-text">
-              {name}
-            </p>
-          )}
+          {title}
         </div>
-        <p className="flex items-center gap-2 text-ink-soft">
+        <p className="flex items-center gap-2 border-t border-dashed border-line pt-3 text-ink-soft">
           <span aria-hidden className="relative h-4 w-6 shrink-0">
             <Pencil className="absolute bottom-px left-0 size-4 origin-bottom-left animate-write-pen" />
             <svg
@@ -78,12 +84,13 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
     <article
       data-testid={`problem-${id}`}
       data-solved={solved}
-      className={`group relative flex h-full flex-col gap-2 rounded-xl border p-3.5 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-16px_var(--ink)] ${
+      data-number={id}
+      className={`group relative flex h-full flex-col gap-3 rounded-xl border p-4 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
         solved
-          ? `border-solved/40 bg-solved-surface ${solvedOnMount ? '' : 'animate-glow'}`
+          ? `border-solved/40 bg-solved-surface before:text-solved/10 ${solvedOnMount ? '' : 'animate-glow'}`
           : busy
-            ? 'border-copper/60 bg-surface'
-            : 'border-line bg-surface hover:border-copper/60'
+            ? 'border-copper/60 bg-surface before:text-copper/10'
+            : 'border-line bg-surface before:text-ink/5 hover:border-copper/60 hover:before:text-copper/10'
       }`}
     >
       <div>
@@ -101,14 +108,14 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
           {/* Above the stretched link, so it stays clickable on its own. */}
           <SolveButton id={id} run={run} compact className="relative z-10" />
         </div>
-        {name && (
-          <p className="mt-1.5 leading-snug font-medium text-pretty text-copper-text">
-            {name}
-          </p>
-        )}
+        {title}
       </div>
 
-      <div className="mt-auto flex min-w-0 items-center gap-2 font-digits">
+      <div
+        className={`mt-auto flex min-w-0 items-center gap-2 border-t border-dashed pt-3 font-digits transition-colors duration-300 ${
+          solved ? 'border-solved/30' : 'border-line'
+        }`}
+      >
         <p className="flex min-w-0 items-baseline gap-2 text-lg">
           <span aria-hidden className="text-ink-soft">
             =
@@ -145,6 +152,38 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
           )}
         </span>
       </div>
+
+      <TimeGauge run={run} />
     </article>
   );
 });
+
+/** A bar along the bottom edge: how much of the one-minute limit a solve took. */
+function TimeGauge({ run }: { run: Run | undefined }) {
+  if (run?.status === 'solving') {
+    return (
+      <span
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-1 bg-copper/15"
+      >
+        <span className="absolute inset-y-0 w-1/3 animate-scan bg-copper/70" />
+      </span>
+    );
+  }
+  if (run?.status !== 'solved') {
+    return null;
+  }
+  return (
+    <span aria-hidden className="absolute inset-x-0 bottom-0 h-1 bg-solved/10">
+      <span
+        key={run.duration}
+        className="absolute inset-y-0 left-0 origin-left animate-grow"
+        style={{
+          // Even an instant run gets a sliver, so the bar never looks missing.
+          width: `${Math.max(3, durationShare(run.duration) * 100)}%`,
+          backgroundColor: durationColor(run.duration),
+        }}
+      />
+    </span>
+  );
+}

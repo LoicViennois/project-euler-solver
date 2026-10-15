@@ -78,6 +78,8 @@
   --animate-write-pen: write-pen 1.8s ease-in-out infinite;
   --animate-write-ink: write-ink 1.8s ease-in-out infinite;
   --animate-fade-in: fade-in 300ms ease-out both;
+  --animate-grow: grow 600ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  --animate-scan: scan 1.2s ease-in-out infinite;
 
   @keyframes pop {
     40% {
@@ -168,6 +170,23 @@
     from {
       opacity: 0;
       transform: translateY(6px);
+    }
+  }
+
+  /* The solving time gauge fills in from the left. */
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  /* A light sweeping back and forth while a problem is being solved. */
+  @keyframes scan {
+    from {
+      left: -33%;
+    }
+    to {
+      left: 100%;
     }
   }
 
