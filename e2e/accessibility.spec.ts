@@ -27,19 +27,12 @@ for (const theme of ['dark', 'light'] as const) {
       // Let the answer and its timing finish fading in before checking contrast.
       await expect
         .poll(() =>
-          problems
-            .tile(1)
-            .evaluate(
-              (tile) =>
-                tile
-                  .getAnimations({ subtree: true })
-                  .filter(
-                    (animation) =>
-                      animation.playState === 'running' &&
-                      animation.effect?.getComputedTiming().iterations !==
-                        Infinity,
-                  ).length,
-            ),
+          page.evaluate(`document
+            .querySelector('[data-testid="problem-1"]')
+            .getAnimations({ subtree: true })
+            .filter((animation) => animation.playState === 'running'
+              && animation.effect.getComputedTiming().iterations !== Infinity)
+            .length`),
         )
         .toBe(0);
 
