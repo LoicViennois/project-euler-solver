@@ -24,8 +24,17 @@ for (const theme of ['dark', 'light'] as const) {
       await problems.goto();
       await problems.solveButton(1).click();
       await expect(problems.answer(1)).toHaveText('233168');
-      // Let the answer finish writing in before checking contrast.
-      await expect(problems.answer(1)).toHaveCSS('clip-path', /none|inset\(0/);
+      // Let the answer and its timing finish fading in before checking contrast.
+      await expect
+        .poll(() =>
+          page.evaluate(`document
+            .querySelector('[data-testid="problem-1"]')
+            .getAnimations({ subtree: true })
+            .filter((animation) => animation.playState === 'running'
+              && animation.effect.getComputedTiming().iterations !== Infinity)
+            .length`),
+        )
+        .toBe(0);
 
       await expectNoViolations(page);
     });
