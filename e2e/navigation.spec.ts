@@ -46,7 +46,7 @@ test.describe('Navigation', () => {
       dialog.getByRole('link', { name: 'MIT License' }),
     ).toHaveAttribute(
       'href',
-      'https://github.com/LoicViennois/project-euler-solver/blob/master/LICENSE',
+      'https://github.com/LoicViennois/project-euler-solver/blob/main/LICENSE',
     );
     await expect(
       dialog.getByRole('link', { name: 'Open an issue on GitHub' }),

@@ -80,7 +80,7 @@ export function AboutDialog({ open, onClose }: AboutDialogProps) {
         <p className="border-t border-line pt-4 text-sm text-ink-soft">
           This program is free software, released under the{' '}
           <a
-            href={`${repoUrl}/blob/master/LICENSE`}
+            href={`${repoUrl}/blob/main/LICENSE`}
             target="_blank"
             rel="noopener"
             className="text-ink"
