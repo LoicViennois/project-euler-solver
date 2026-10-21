@@ -109,7 +109,7 @@ function CodePage() {
           {problemTitle(id) && (
             <>
               {' · '}
-              <span className="font-semibold text-copper-text">
+              <span className="font-semibold text-accent-text">
                 {problemTitle(id)}
               </span>
             </>
@@ -121,12 +121,12 @@ function CodePage() {
           href={problemUrl(id)}
           target="_blank"
           rel="noopener"
-          className="group btn border border-copper/60 bg-surface px-4 py-2.5 text-base text-ink hover:border-copper hover:bg-tint"
+          className="group btn border border-accent/60 bg-surface px-4 py-2.5 text-base text-ink hover:border-accent hover:bg-tint"
         >
-          <BookOpen className="size-5 text-copper-text" aria-hidden />
+          <BookOpen className="size-5 text-accent-text" aria-hidden />
           <span>
             Read problem {id} on{' '}
-            <span className="text-copper-text">Project Euler</span>
+            <span className="text-accent-text">Project Euler</span>
           </span>
           <ExternalLink
             className="size-4 text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

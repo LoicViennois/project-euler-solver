@@ -34,7 +34,7 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
 
   const name = problemTitle(id);
   const heading = (
-    <span className="font-digits text-xs font-semibold tracking-widest text-copper-text uppercase">
+    <span className="font-digits text-xs font-semibold tracking-widest text-accent-text uppercase">
       Problem {id}
     </span>
   );
@@ -85,12 +85,12 @@ export const ProblemTile = memo(function ProblemTile({ id }: { id: number }) {
       data-testid={`problem-${id}`}
       data-solved={solved}
       data-number={id}
-      className={`group relative flex h-full flex-col gap-2 rounded-xl border px-3.5 py-3 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-copper hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
+      className={`group relative flex h-full flex-col gap-2 rounded-xl border px-3.5 py-3 transition duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-accent hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_var(--ink)] ${watermark} ${
         solved
           ? `border-solved/40 bg-solved-surface before:text-solved/10 ${solvedOnMount ? '' : 'animate-glow'}`
           : busy
-            ? 'border-copper/60 bg-surface before:text-copper/10'
-            : 'border-line bg-surface before:text-ink/5 hover:border-copper/60 hover:before:text-copper/10'
+            ? 'border-accent/60 bg-surface before:text-accent/10'
+            : 'border-line bg-surface before:text-ink/5 hover:border-accent/60 hover:before:text-accent/10'
       }`}
     >
       <div>
@@ -164,9 +164,9 @@ function TimeGauge({ run }: { run: Run | undefined }) {
     return (
       <span
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-1 bg-copper/15"
+        className="absolute inset-x-0 bottom-0 h-1 bg-accent/15"
       >
-        <span className="absolute inset-y-0 w-1/3 animate-scan bg-copper/70" />
+        <span className="absolute inset-y-0 w-1/3 animate-scan bg-accent/70" />
       </span>
     );
   }

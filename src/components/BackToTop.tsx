@@ -33,7 +33,7 @@ export function BackToTop({ targetId }: { targetId: string }) {
       type="button"
       onClick={goToTop}
       aria-label="Back to top"
-      className="fixed right-4 bottom-5 z-30 sm:right-6 sm:bottom-6 grid size-12 animate-rise cursor-pointer place-items-center rounded-full bg-copper text-copper-ink shadow-[0_8px_20px_-6px_var(--copper)] transition hover:-translate-y-0.5 active:scale-90"
+      className="fixed right-4 bottom-5 z-30 sm:right-6 sm:bottom-6 grid size-12 animate-rise cursor-pointer place-items-center rounded-full bg-accent text-accent-ink shadow-[0_8px_20px_-6px_var(--accent)] transition hover:-translate-y-0.5 active:scale-90"
     >
       <ArrowUp className="size-5" aria-hidden />
     </button>

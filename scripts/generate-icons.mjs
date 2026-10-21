@@ -1,4 +1,4 @@
-// Generates the favicon and PWA icons from one SVG design: a copper double spiral
+// Generates the favicon and PWA icons from one SVG design: a cyan double spiral
 // on slate, the same mark as the header logo (src/components/Logo.tsx).
 // Usage: pnpm icons
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -16,7 +16,7 @@ const PUBLIC_DIR = resolve(
 
 const BACKGROUND = '#152330';
 const GRID = '#1f3242';
-const COPPER = '#d9995a';
+const ACCENT = '#4fc3e8';
 
 /**
  * @param {{ maskable?: boolean }} options Maskable icons are full-bleed, with the
@@ -39,7 +39,7 @@ function iconSvg({ maskable = false } = {}) {
     <rect width="512" height="512" fill="${BACKGROUND}"/>
     ${gridLines}
   </g>
-  <path transform="translate(${offset} ${offset}) scale(${scale})" d="${SPIRAL_PATH}" fill="none" stroke="${COPPER}" stroke-width="${SPIRAL_STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round"/>
+  <path transform="translate(${offset} ${offset}) scale(${scale})" d="${SPIRAL_PATH}" fill="none" stroke="${ACCENT}" stroke-width="${SPIRAL_STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 }
@@ -61,7 +61,12 @@ const outputs = [
   })),
 ];
 
-const browser = await chromium.launch();
+// Same override as playwright.config.ts, for environments with a preinstalled browser.
+const browser = await chromium.launch(
+  process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
+    : {},
+);
 const page = await browser.newPage();
 
 for (const { file, svg, size } of outputs) {

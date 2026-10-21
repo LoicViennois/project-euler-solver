@@ -12,7 +12,7 @@ export function Logo({ className }: { className?: string }) {
       <path
         d={SPIRAL_PATH}
         fill="none"
-        stroke="#d9995a"
+        stroke="#4fc3e8"
         strokeWidth={SPIRAL_STROKE_WIDTH}
         strokeLinecap="round"
         strokeLinejoin="round"

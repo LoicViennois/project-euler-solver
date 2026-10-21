@@ -13,9 +13,9 @@
   --ink-soft: #4d5f6e;
   --line: #cdd8e0;
   --grid: rgb(19 33 45 / 0.055);
-  --copper: #a5581c;
-  --copper-ink: #ffffff;
-  --copper-text: #9a5119;
+  --accent: #0b6e99;
+  --accent-ink: #ffffff;
+  --accent-text: #0a6690;
   --solved: #157a52;
   --alert: #b42d1a;
   --tint: rgb(19 33 45 / 0.05);
@@ -23,9 +23,9 @@
   /* Lightness of the green-to-red solving time, readable on either theme. */
   --time-lightness: 0.5;
 
-  --code-keyword: #9a5119;
+  --code-keyword: #0a6690;
   --code-string: #157a52;
-  --code-number: #1f5f99;
+  --code-number: #9a5119;
   --code-builtin: #6b3fa8;
   --code-comment: #5d6d7a;
 }
@@ -37,17 +37,17 @@
   --ink-soft: #9aabb9;
   --line: #253847;
   --grid: rgb(154 171 185 / 0.06);
-  --copper: #d9995a;
-  --copper-ink: #1d1206;
-  --copper-text: #e2a96f;
+  --accent: #4fc3e8;
+  --accent-ink: #04141b;
+  --accent-text: #6fd0f0;
   --solved: #6fd1a4;
   --alert: #ff7a66;
   --tint: rgb(230 235 239 / 0.05);
   --time-lightness: 0.8;
 
-  --code-keyword: #e2a96f;
+  --code-keyword: #6fd0f0;
   --code-string: #8fd8b4;
-  --code-number: #8cc1ec;
+  --code-number: #e2a96f;
   --code-builtin: #c9adf0;
   --code-comment: #8a9cab;
 }
@@ -58,9 +58,9 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
-  --color-copper: var(--copper);
-  --color-copper-ink: var(--copper-ink);
-  --color-copper-text: var(--copper-text);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
   --color-solved: var(--solved);
   --color-solved-surface: var(--solved-surface);
   --color-alert: var(--alert);
@@ -233,7 +233,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--copper);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -270,11 +270,11 @@
 }
 
 @utility btn-primary {
-  background-color: var(--copper);
-  color: var(--copper-ink);
+  background-color: var(--accent);
+  color: var(--accent-ink);
 
   &:hover:not(:disabled) {
-    box-shadow: 0 6px 18px -8px var(--copper);
+    box-shadow: 0 6px 18px -8px var(--accent);
   }
 }
 
@@ -290,12 +290,12 @@
 @utility link {
   font-weight: 600;
   text-decoration-line: underline;
-  text-decoration-color: var(--copper);
+  text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 
   &:hover {
-    color: var(--copper-text);
+    color: var(--accent-text);
   }
 }
 

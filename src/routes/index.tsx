@@ -160,7 +160,7 @@ function ProgressStrip({ runs }: { runs: ReadonlyMap<number, Run> }) {
                 : status === 'solved'
                   ? 'animate-pop bg-solved'
                   : status === 'solving'
-                    ? 'animate-pulse bg-copper/50'
+                    ? 'animate-pulse bg-accent/50'
                     : 'bg-line'
             }`}
           />

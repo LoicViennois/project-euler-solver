@@ -45,7 +45,7 @@ export function SolveButton({
           ? 'bg-solved/15 text-solved hover:bg-solved/25'
           : busy
             ? 'bg-tint text-ink-soft'
-            : 'bg-tint text-copper-text ring-1 ring-line hover:bg-copper hover:text-copper-ink active:scale-90'
+            : 'bg-tint text-accent-text ring-1 ring-line hover:bg-accent hover:text-accent-ink active:scale-90'
       } ${className ?? ''}`}
     >
       <Icon
