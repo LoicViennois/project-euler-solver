@@ -13,9 +13,9 @@
   --ink-soft: #4d5f6e;
   --line: #cdd8e0;
   --grid: rgb(19 33 45 / 0.055);
-  --accent: #0b6e99;
+  --accent: #3b7a14;
   --accent-ink: #ffffff;
-  --accent-text: #0a6690;
+  --accent-text: #376f13;
   --solved: #157a52;
   --alert: #b42d1a;
   --tint: rgb(19 33 45 / 0.05);
@@ -23,9 +23,9 @@
   /* Lightness of the green-to-red solving time, readable on either theme. */
   --time-lightness: 0.5;
 
-  --code-keyword: #0a6690;
+  --code-keyword: #9a5119;
   --code-string: #157a52;
-  --code-number: #9a5119;
+  --code-number: #1f5f99;
   --code-builtin: #6b3fa8;
   --code-comment: #5d6d7a;
 }
@@ -37,17 +37,17 @@
   --ink-soft: #9aabb9;
   --line: #253847;
   --grid: rgb(154 171 185 / 0.06);
-  --accent: #4fc3e8;
-  --accent-ink: #04141b;
-  --accent-text: #6fd0f0;
+  --accent: #8fd14f;
+  --accent-ink: #102004;
+  --accent-text: #a5dd72;
   --solved: #6fd1a4;
   --alert: #ff7a66;
   --tint: rgb(230 235 239 / 0.05);
   --time-lightness: 0.8;
 
-  --code-keyword: #6fd0f0;
+  --code-keyword: #e2a96f;
   --code-string: #8fd8b4;
-  --code-number: #e2a96f;
+  --code-number: #8cc1ec;
   --code-builtin: #c9adf0;
   --code-comment: #8a9cab;
 }

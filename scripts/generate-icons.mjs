@@ -1,4 +1,4 @@
-// Generates the favicon and PWA icons from one SVG design: a cyan double spiral
+// Generates the favicon and PWA icons from one SVG design: a green double spiral
 // on slate, the same mark as the header logo (src/components/Logo.tsx).
 // Usage: pnpm icons
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -16,7 +16,7 @@ const PUBLIC_DIR = resolve(
 
 const BACKGROUND = '#152330';
 const GRID = '#1f3242';
-const ACCENT = '#4fc3e8';
+const ACCENT = '#8fd14f';
 
 /**
  * @param {{ maskable?: boolean }} options Maskable icons are full-bleed, with the
