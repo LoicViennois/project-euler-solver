@@ -14,7 +14,7 @@
   },
   "scripts": {
     "predev": "node scripts/fetch-titles.mjs",
-    "dev": "vite",
+    "dev": "vite --open",
     "start": "vite",
     "prebuild": "node scripts/fetch-titles.mjs",
     "build": "tsc -b && vite build",
