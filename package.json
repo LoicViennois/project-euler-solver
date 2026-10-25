@@ -32,11 +32,11 @@
   },
   "private": true,
   "dependencies": {
-    "@tanstack/react-router": "^1.170.44",
+    "@tanstack/react-router": "^1.170.45",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "highlight.js": "^11.12.0",
-    "lucide-react": "^1.57.0",
+    "lucide-react": "^1.61.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
