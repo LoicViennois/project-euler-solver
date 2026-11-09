@@ -81,20 +81,6 @@ test.describe('Problems', () => {
     await expect(problems.answer(3)).toHaveText('6857');
   });
 
-  test('keeps the answers across a reload', async ({ page }) => {
-    await problems.solveButton(1).click();
-    await expect(problems.answer(1)).toHaveText('233168');
-
-    await page.reload();
-    await expect(problems.answer(1)).toHaveText('233168');
-    await expect(problems.progress).toHaveText(/^1 of 67 solved in /);
-
-    // A reset is kept too.
-    await problems.resetButton.click();
-    await page.reload();
-    await expect(problems.answer(1)).toHaveText('?');
-  });
-
   for (const [device, viewport] of [
     ['mobile', { width: 390, height: 844 }],
     ['desktop', { width: 1280, height: 800 }],

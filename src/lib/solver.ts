@@ -11,47 +11,10 @@ export type Run =
   | { status: 'solved'; value: number; duration: number }
   | { status: 'failed'; error: string };
 
-const STORAGE_KEY = 'pe_runs';
-
-type FinishedRun = Extract<Run, { status: 'solved' | 'failed' }>;
-
-function isFinished(run: Run): run is FinishedRun {
-  return run.status === 'solved' || run.status === 'failed';
-}
-
-/** The results of this tab's session, so a reload (an update) keeps them. */
-function loadRuns(): Map<number, Run> {
-  try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    const saved: unknown = raw ? JSON.parse(raw) : [];
-    return new Map(
-      Array.isArray(saved)
-        ? (saved as [number, FinishedRun][]).filter(
-            ([id, run]) => hasSolution(id) && isFinished(run),
-          )
-        : [],
-    );
-  } catch {
-    return new Map();
-  }
-}
-
-function saveRuns(): void {
-  try {
-    sessionStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify([...runs].filter(([, run]) => isFinished(run))),
-    );
-  } catch {
-    // ignore storage errors
-  }
-}
-
-// Results live for the whole session, so they survive navigating to the code
-// and back, and reloads.
-const runs = loadRuns();
+// Results live for the whole session, so they survive navigating to the code and back.
+const runs = new Map<number, Run>();
 const listeners = new Set<() => void>();
-let snapshot: ReadonlyMap<number, Run> = new Map(runs);
+let snapshot: ReadonlyMap<number, Run> = new Map();
 // An update reloads the page, which would stop the solutions running.
 let releaseUpdates: (() => void) | null = null;
 
@@ -61,7 +24,6 @@ let current: number | null = null;
 
 function emit(): void {
   snapshot = new Map(runs);
-  saveRuns();
   if (current !== null) {
     releaseUpdates ??= holdUpdates();
   } else {
