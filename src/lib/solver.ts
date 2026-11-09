@@ -3,6 +3,7 @@ import { useSyncExternalStore } from 'react';
 import type { SolveResponse } from '../workers/solver.worker';
 import SolverWorker from '../workers/solver.worker?worker';
 import { hasSolution } from './catalog';
+import { holdUpdates } from './update';
 
 export type Run =
   | { status: 'queued' }
@@ -14,6 +15,8 @@ export type Run =
 const runs = new Map<number, Run>();
 const listeners = new Set<() => void>();
 let snapshot: ReadonlyMap<number, Run> = new Map();
+// An update reloads the page, which would stop the solutions running.
+let releaseUpdates: (() => void) | null = null;
 
 let worker: Worker | null = null;
 const queue: number[] = [];
@@ -21,6 +24,12 @@ let current: number | null = null;
 
 function emit(): void {
   snapshot = new Map(runs);
+  if (current !== null) {
+    releaseUpdates ??= holdUpdates();
+  } else {
+    releaseUpdates?.();
+    releaseUpdates = null;
+  }
   listeners.forEach((listener) => listener());
 }
 
