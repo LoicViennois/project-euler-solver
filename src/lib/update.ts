@@ -1,17 +1,53 @@
 import { registerSW } from 'virtual:pwa-register';
 
-import { createStore } from './store';
-
 // Long-lived sessions (an installed app left open) only look for a new service
 // worker on navigation, so check periodically too.
 const UPDATE_CHECK_INTERVAL = 60 * 60 * 1000;
 
-const updateReady = createStore(false);
+let holds = 0;
+let applyPending: (() => void) | null = null;
 
-// The new service worker waits until the player accepts, so an open page keeps
-// being served the precached chunks of the version it was built against.
+/**
+ * Keeps an update from reloading the page while something that a reload would
+ * lose is going on. Returns the function that releases the hold.
+ */
+export function holdUpdates(): () => void {
+  holds += 1;
+  let released = false;
+  return () => {
+    if (released) {
+      return;
+    }
+    released = true;
+    holds -= 1;
+    applyPending?.();
+  };
+}
+
+/**
+ * Activates the waiting service worker, which reloads the page, while nobody
+ * is looking: once the page is hidden (another tab, the app sent to the
+ * background, the phone locked) and nothing holds updates back. A closed app
+ * picks the update up on its next launch anyway, so there is never anything
+ * to click.
+ */
+function applyWhenHidden(update: () => Promise<void>): void {
+  const apply = () => {
+    if (document.visibilityState === 'hidden' && holds === 0) {
+      document.removeEventListener('visibilitychange', apply);
+      applyPending = null;
+      void update();
+    }
+  };
+  applyPending = apply;
+  document.addEventListener('visibilitychange', apply);
+  apply();
+}
+
+// The new service worker waits meanwhile, so an open page keeps being served
+// the precached chunks of the version it was built against.
 const updateServiceWorker = registerSW({
-  onNeedRefresh: () => updateReady.set(true),
+  onNeedRefresh: () => applyWhenHidden(() => updateServiceWorker()),
   onRegisteredSW(_swUrl, registration) {
     if (!registration) {
       return;
@@ -23,14 +59,3 @@ const updateServiceWorker = registerSW({
     }, UPDATE_CHECK_INTERVAL);
   },
 });
-
-export const useUpdateReady = updateReady.use;
-
-/** Activates the waiting service worker, which reloads the page. */
-export function applyUpdate(): void {
-  void updateServiceWorker();
-}
-
-export function dismissUpdate(): void {
-  updateReady.set(false);
-}

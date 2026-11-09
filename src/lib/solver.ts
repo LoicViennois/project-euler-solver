@@ -3,6 +3,7 @@ import { useSyncExternalStore } from 'react';
 import type { SolveResponse } from '../workers/solver.worker';
 import SolverWorker from '../workers/solver.worker?worker';
 import { hasSolution } from './catalog';
+import { holdUpdates } from './update';
 
 export type Run =
   | { status: 'queued' }
@@ -10,10 +11,49 @@ export type Run =
   | { status: 'solved'; value: number; duration: number }
   | { status: 'failed'; error: string };
 
-// Results live for the whole session, so they survive navigating to the code and back.
-const runs = new Map<number, Run>();
+const STORAGE_KEY = 'pe_runs';
+
+type FinishedRun = Extract<Run, { status: 'solved' | 'failed' }>;
+
+function isFinished(run: Run): run is FinishedRun {
+  return run.status === 'solved' || run.status === 'failed';
+}
+
+/** The results of this tab's session, so a reload (an update) keeps them. */
+function loadRuns(): Map<number, Run> {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const saved: unknown = raw ? JSON.parse(raw) : [];
+    return new Map(
+      Array.isArray(saved)
+        ? (saved as [number, FinishedRun][]).filter(
+            ([id, run]) => hasSolution(id) && isFinished(run),
+          )
+        : [],
+    );
+  } catch {
+    return new Map();
+  }
+}
+
+function saveRuns(): void {
+  try {
+    sessionStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([...runs].filter(([, run]) => isFinished(run))),
+    );
+  } catch {
+    // ignore storage errors
+  }
+}
+
+// Results live for the whole session, so they survive navigating to the code
+// and back, and reloads.
+const runs = loadRuns();
 const listeners = new Set<() => void>();
-let snapshot: ReadonlyMap<number, Run> = new Map();
+let snapshot: ReadonlyMap<number, Run> = new Map(runs);
+// An update reloads the page, which would stop the solutions running.
+let releaseUpdates: (() => void) | null = null;
 
 let worker: Worker | null = null;
 const queue: number[] = [];
@@ -21,6 +61,13 @@ let current: number | null = null;
 
 function emit(): void {
   snapshot = new Map(runs);
+  saveRuns();
+  if (current !== null) {
+    releaseUpdates ??= holdUpdates();
+  } else {
+    releaseUpdates?.();
+    releaseUpdates = null;
+  }
   listeners.forEach((listener) => listener());
 }
 
