@@ -67,12 +67,10 @@ export function AboutDialog({ open, onClose }: AboutDialogProps) {
               Want to say hi?
               <br />
               <a
-                href="https://www.reddit.com/message/compose/?to=LoicViennois"
-                target="_blank"
-                rel="noopener"
+                href="mailto:contact@loicviennois.com?subject=%5BProject%20Euler%20Solver%5D%20Hello"
                 className="text-ink"
               >
-                Message me on Reddit
+                Send me an email
               </a>
             </li>
           </ul>
