@@ -24,7 +24,7 @@ export function Header() {
           aria-label="Project Euler Solver, home"
         >
           <Logo />
-          <span className="text-lg font-semibold tracking-tight whitespace-nowrap">
+          <span className="text-base font-semibold tracking-tight whitespace-nowrap sm:text-lg">
             <span className="hidden sm:inline">Project </span>Euler Solver
           </span>
         </Link>
