@@ -10,7 +10,7 @@ import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
 
 const iconButton =
-  'grid size-9 cursor-pointer place-items-center rounded-lg text-ink-soft transition hover:bg-tint hover:text-ink active:scale-90';
+  'grid size-8 sm:size-9 cursor-pointer place-items-center rounded-lg text-ink-soft transition hover:bg-tint hover:text-ink active:scale-90';
 
 export function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -25,10 +25,10 @@ export function Header() {
         >
           <Logo />
           <span className="text-lg font-semibold tracking-tight whitespace-nowrap">
-            Project Euler Solver
+            <span className="hidden sm:inline">Project </span>Euler Solver
           </span>
         </Link>
-        <nav aria-label="Site" className="flex items-center gap-1">
+        <nav aria-label="Site" className="flex items-center sm:gap-1">
           <a
             href={repoUrl}
             target="_blank"
