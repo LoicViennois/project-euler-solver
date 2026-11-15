@@ -30,6 +30,16 @@ test.describe('Navigation', () => {
     );
   });
 
+  test('links to the home page', async ({ page }) => {
+    const problems = new ProblemsPage(page);
+    await problems.goto();
+
+    await expect(problems.homeLink).toHaveAttribute(
+      'href',
+      'https://www.loicviennois.com/',
+    );
+  });
+
   test('shows the about dialog', async ({ page }) => {
     const problems = new ProblemsPage(page);
     await problems.goto();

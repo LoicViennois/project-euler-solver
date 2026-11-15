@@ -7,6 +7,7 @@ export class ProblemsPage {
   readonly resetButton: Locator;
   readonly progress: Locator;
   readonly githubLink: Locator;
+  readonly homeLink: Locator;
   readonly aboutButton: Locator;
   readonly themeToggle: Locator;
 
@@ -19,6 +20,9 @@ export class ProblemsPage {
     this.githubLink = page
       .getByRole('banner')
       .getByRole('link', { name: 'GitHub repository' });
+    this.homeLink = page
+      .getByRole('banner')
+      .getByRole('link', { name: 'More projects by Loïc Viennois' });
     this.aboutButton = page
       .getByRole('banner')
       .getByRole('button', { name: 'About' });
