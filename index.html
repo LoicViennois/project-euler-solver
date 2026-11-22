@@ -25,6 +25,16 @@
         }
         document.documentElement.dataset.theme = theme;
       })();
+      // Flag a reload made by an update before analytics count it as a visit
+      // (see src/lib/auto-reload.ts).
+      (function () {
+        try {
+          if (sessionStorage.getItem('pes_auto_reload')) {
+            sessionStorage.removeItem('pes_auto_reload');
+            document.documentElement.dataset.autoReload = '';
+          }
+        } catch (e) {}
+      })();
     </script>
   </head>
   <body>

@@ -1,5 +1,7 @@
 import { registerSW } from 'virtual:pwa-register';
 
+import { markAutoReload } from './auto-reload';
+
 // Long-lived sessions (an installed app left open) only look for a new service
 // worker on navigation, so check periodically too.
 const UPDATE_CHECK_INTERVAL = 60 * 60 * 1000;
@@ -29,13 +31,14 @@ export function holdUpdates(): () => void {
  * is looking: once the page is hidden (another tab, the app sent to the
  * background, the phone locked) and nothing holds updates back. A closed app
  * picks the update up on its next launch anyway, so there is never anything
- * to click.
+ * to click. The reload is flagged so that analytics do not count it as a visit.
  */
 function applyWhenHidden(update: () => Promise<void>): void {
   const apply = () => {
     if (document.visibilityState === 'hidden' && holds === 0) {
       document.removeEventListener('visibilitychange', apply);
       applyPending = null;
+      markAutoReload();
       void update();
     }
   };
