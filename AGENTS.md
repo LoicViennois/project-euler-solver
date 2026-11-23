@@ -12,7 +12,6 @@
 - Always create a PR if none exists for current branch
 - Use gitmoji for PR title
 - Assign myself when creating a PR
-- PR description should only contain a "Summary" section
 
 ## TypeScript Best Practices
 
